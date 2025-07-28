@@ -40,6 +40,7 @@
     
     @!execution://cognitive-workflow
     @!execution://cognitive-validation
+    @!execution://cognition-development
   </principle>
   
   <knowledge>
@@ -60,5 +61,17 @@
     - 使用标准认知心理学术语命名
     - 区分sensation/perception/cognition/comprehension
     - 保持与学术文献的一致性
+    
+    ### Issue #16 Substrate设计决策
+    - **Computation vs Generation**：认知的两种基础执行机制
+    - Substrate是认知的内在组成部分，位于cognition包内
+    - 命令化架构提供精确的上下文控制和灵活的执行策略
+    - 计算基质处理确定性任务，生成基质处理语义任务
+    
+    ### 开发规范要求
+    - 严格的interface-first设计，先定义接口再实现
+    - 所有代码和注释使用英文，遵循神经科学术语
+    - 接口不使用I前缀，实现类使用描述性后缀
+    - 必须在正确的目录结构下：packages/cognition/src/
   </knowledge>
 </role>
