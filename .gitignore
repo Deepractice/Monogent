@@ -124,5 +124,5 @@ temp
 # pnpm-lock.yaml
 
 # PromptX configuration
-.promptx/*
-!.promptx/pouch.json
+.promptx/*.json
+.promptx/**/*.json
