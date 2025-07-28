@@ -60,6 +60,22 @@ importers:
         specifier: ^1.2.1
         version: 1.6.1(@types/node@20.19.9)
 
+  packages/cognition:
+    dependencies:
+      '@monogent/cortex':
+        specifier: workspace:*
+        version: link:../cortex
+      '@monogent/hippocampus':
+        specifier: workspace:*
+        version: link:../hippocampus
+      '@monogent/logger':
+        specifier: workspace:*
+        version: link:../logger
+    devDependencies:
+      tsup:
+        specifier: ^8.0.1
+        version: 8.5.0(typescript@5.8.3)
+
   packages/cortex:
     dependencies:
       '@monogent/hippocampus':

@@ -1,0 +1,40 @@
+{
+  "name": "@monogent/cognition",
+  "version": "0.0.1",
+  "description": "Monogent cognitive processing system - orchestrates the complete cognitive flow from sensation to comprehension",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "test:watch": "vitest watch",
+    "lint": "eslint src/**/*.ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "monogent",
+    "cognition",
+    "cognitive",
+    "perception",
+    "comprehension",
+    "ai"
+  ],
+  "dependencies": {
+    "@monogent/hippocampus": "workspace:*",
+    "@monogent/cortex": "workspace:*",
+    "@monogent/logger": "workspace:*"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.1"
+  }
+}
