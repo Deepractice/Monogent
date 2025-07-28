@@ -4,11 +4,123 @@
   "metadata": {
     "version": "2.0.0",
     "description": "project 级资源注册表",
-    "createdAt": "2025-07-28T08:11:58.946Z",
-    "updatedAt": "2025-07-28T08:11:58.949Z",
-    "resourceCount": 3
+    "createdAt": "2025-07-28T10:10:59.931Z",
+    "updatedAt": "2025-07-28T10:10:59.937Z",
+    "resourceCount": 11
   },
   "resources": [
+    {
+      "id": "cognitive-validation",
+      "source": "project",
+      "protocol": "execution",
+      "name": "Cognitive Validation 执行模式",
+      "description": "执行模式，定义具体的行为模式",
+      "reference": "@project://.promptx/resource/role/hippocampus/execution/cognitive-validation.execution.md",
+      "metadata": {
+        "createdAt": "2025-07-28T10:10:59.932Z",
+        "updatedAt": "2025-07-28T10:10:59.932Z",
+        "scannedAt": "2025-07-28T10:10:59.932Z",
+        "path": "role/hippocampus/execution/cognitive-validation.execution.md"
+      }
+    },
+    {
+      "id": "neuroscience-research",
+      "source": "project",
+      "protocol": "execution",
+      "name": "Neuroscience Research 执行模式",
+      "description": "执行模式，定义具体的行为模式",
+      "reference": "@project://.promptx/resource/role/hippocampus/execution/neuroscience-research.execution.md",
+      "metadata": {
+        "createdAt": "2025-07-28T10:10:59.933Z",
+        "updatedAt": "2025-07-28T10:10:59.933Z",
+        "scannedAt": "2025-07-28T10:10:59.933Z",
+        "path": "role/hippocampus/execution/neuroscience-research.execution.md"
+      }
+    },
+    {
+      "id": "pair-programming",
+      "source": "project",
+      "protocol": "execution",
+      "name": "Pair Programming 执行模式",
+      "description": "执行模式，定义具体的行为模式",
+      "reference": "@project://.promptx/resource/role/hippocampus/execution/pair-programming.execution.md",
+      "metadata": {
+        "createdAt": "2025-07-28T10:10:59.933Z",
+        "updatedAt": "2025-07-28T10:10:59.933Z",
+        "scannedAt": "2025-07-28T10:10:59.933Z",
+        "path": "role/hippocampus/execution/pair-programming.execution.md"
+      }
+    },
+    {
+      "id": "hippocampus",
+      "source": "project",
+      "protocol": "role",
+      "name": "Hippocampus 角色",
+      "description": "专业角色，提供特定领域的专业能力",
+      "reference": "@project://.promptx/resource/role/hippocampus/hippocampus.role.md",
+      "metadata": {
+        "createdAt": "2025-07-28T10:10:59.934Z",
+        "updatedAt": "2025-07-28T10:10:59.934Z",
+        "scannedAt": "2025-07-28T10:10:59.934Z",
+        "path": "role/hippocampus/hippocampus.role.md"
+      }
+    },
+    {
+      "id": "monogent-theory",
+      "source": "project",
+      "protocol": "knowledge",
+      "name": "Monogent Theory 知识库",
+      "description": "知识库，提供专业知识和信息",
+      "reference": "@project://.promptx/resource/role/hippocampus/knowledge/monogent-theory.knowledge.md",
+      "metadata": {
+        "createdAt": "2025-07-28T10:10:59.934Z",
+        "updatedAt": "2025-07-28T10:10:59.934Z",
+        "scannedAt": "2025-07-28T10:10:59.934Z",
+        "path": "role/hippocampus/knowledge/monogent-theory.knowledge.md"
+      }
+    },
+    {
+      "id": "neuroscience-foundations",
+      "source": "project",
+      "protocol": "knowledge",
+      "name": "Neuroscience Foundations 知识库",
+      "description": "知识库，提供专业知识和信息",
+      "reference": "@project://.promptx/resource/role/hippocampus/knowledge/neuroscience-foundations.knowledge.md",
+      "metadata": {
+        "createdAt": "2025-07-28T10:10:59.934Z",
+        "updatedAt": "2025-07-28T10:10:59.934Z",
+        "scannedAt": "2025-07-28T10:10:59.934Z",
+        "path": "role/hippocampus/knowledge/neuroscience-foundations.knowledge.md"
+      }
+    },
+    {
+      "id": "critical-validation",
+      "source": "project",
+      "protocol": "thought",
+      "name": "Critical Validation 思维模式",
+      "description": "思维模式，指导AI的思考方式",
+      "reference": "@project://.promptx/resource/role/hippocampus/thought/critical-validation.thought.md",
+      "metadata": {
+        "createdAt": "2025-07-28T10:10:59.935Z",
+        "updatedAt": "2025-07-28T10:10:59.935Z",
+        "scannedAt": "2025-07-28T10:10:59.935Z",
+        "path": "role/hippocampus/thought/critical-validation.thought.md"
+      }
+    },
+    {
+      "id": "neuroscience-integration",
+      "source": "project",
+      "protocol": "thought",
+      "name": "Neuroscience Integration 思维模式",
+      "description": "思维模式，指导AI的思考方式",
+      "reference": "@project://.promptx/resource/role/hippocampus/thought/neuroscience-integration.thought.md",
+      "metadata": {
+        "createdAt": "2025-07-28T10:10:59.935Z",
+        "updatedAt": "2025-07-28T10:10:59.935Z",
+        "scannedAt": "2025-07-28T10:10:59.935Z",
+        "path": "role/hippocampus/thought/neuroscience-integration.thought.md"
+      }
+    },
     {
       "id": "monogent-architecture-workflow",
       "source": "project",
@@ -17,9 +129,9 @@
       "description": "执行模式，定义具体的行为模式",
       "reference": "@project://.promptx/resource/role/monogent-architect/execution/monogent-architecture-workflow.execution.md",
       "metadata": {
-        "createdAt": "2025-07-28T08:11:58.947Z",
-        "updatedAt": "2025-07-28T08:11:58.947Z",
-        "scannedAt": "2025-07-28T08:11:58.947Z",
+        "createdAt": "2025-07-28T10:10:59.936Z",
+        "updatedAt": "2025-07-28T10:10:59.936Z",
+        "scannedAt": "2025-07-28T10:10:59.936Z",
         "path": "role/monogent-architect/execution/monogent-architecture-workflow.execution.md"
       }
     },
@@ -31,9 +143,9 @@
       "description": "专业角色，提供特定领域的专业能力",
       "reference": "@project://.promptx/resource/role/monogent-architect/monogent-architect.role.md",
       "metadata": {
-        "createdAt": "2025-07-28T08:11:58.948Z",
-        "updatedAt": "2025-07-28T08:11:58.948Z",
-        "scannedAt": "2025-07-28T08:11:58.948Z",
+        "createdAt": "2025-07-28T10:10:59.936Z",
+        "updatedAt": "2025-07-28T10:10:59.936Z",
+        "scannedAt": "2025-07-28T10:10:59.936Z",
         "path": "role/monogent-architect/monogent-architect.role.md"
       }
     },
@@ -45,22 +157,23 @@
       "description": "思维模式，指导AI的思考方式",
       "reference": "@project://.promptx/resource/role/monogent-architect/thought/monogent-architectural-thinking.thought.md",
       "metadata": {
-        "createdAt": "2025-07-28T08:11:58.948Z",
-        "updatedAt": "2025-07-28T08:11:58.948Z",
-        "scannedAt": "2025-07-28T08:11:58.948Z",
+        "createdAt": "2025-07-28T10:10:59.937Z",
+        "updatedAt": "2025-07-28T10:10:59.937Z",
+        "scannedAt": "2025-07-28T10:10:59.937Z",
         "path": "role/monogent-architect/thought/monogent-architectural-thinking.thought.md"
       }
     }
   ],
   "stats": {
-    "totalResources": 3,
+    "totalResources": 11,
     "byProtocol": {
-      "execution": 1,
-      "role": 1,
-      "thought": 1
+      "execution": 4,
+      "role": 2,
+      "knowledge": 2,
+      "thought": 3
     },
     "bySource": {
-      "project": 3
+      "project": 11
     }
   }
 }
