@@ -1,0 +1,66 @@
+{
+  "version": "2.0.0",
+  "source": "project",
+  "metadata": {
+    "version": "2.0.0",
+    "description": "project 级资源注册表",
+    "createdAt": "2025-07-28T08:11:58.946Z",
+    "updatedAt": "2025-07-28T08:11:58.949Z",
+    "resourceCount": 3
+  },
+  "resources": [
+    {
+      "id": "monogent-architecture-workflow",
+      "source": "project",
+      "protocol": "execution",
+      "name": "Monogent Architecture Workflow 执行模式",
+      "description": "执行模式，定义具体的行为模式",
+      "reference": "@project://.promptx/resource/role/monogent-architect/execution/monogent-architecture-workflow.execution.md",
+      "metadata": {
+        "createdAt": "2025-07-28T08:11:58.947Z",
+        "updatedAt": "2025-07-28T08:11:58.947Z",
+        "scannedAt": "2025-07-28T08:11:58.947Z",
+        "path": "role/monogent-architect/execution/monogent-architecture-workflow.execution.md"
+      }
+    },
+    {
+      "id": "monogent-architect",
+      "source": "project",
+      "protocol": "role",
+      "name": "Monogent Architect 角色",
+      "description": "专业角色，提供特定领域的专业能力",
+      "reference": "@project://.promptx/resource/role/monogent-architect/monogent-architect.role.md",
+      "metadata": {
+        "createdAt": "2025-07-28T08:11:58.948Z",
+        "updatedAt": "2025-07-28T08:11:58.948Z",
+        "scannedAt": "2025-07-28T08:11:58.948Z",
+        "path": "role/monogent-architect/monogent-architect.role.md"
+      }
+    },
+    {
+      "id": "monogent-architectural-thinking",
+      "source": "project",
+      "protocol": "thought",
+      "name": "Monogent Architectural Thinking 思维模式",
+      "description": "思维模式，指导AI的思考方式",
+      "reference": "@project://.promptx/resource/role/monogent-architect/thought/monogent-architectural-thinking.thought.md",
+      "metadata": {
+        "createdAt": "2025-07-28T08:11:58.948Z",
+        "updatedAt": "2025-07-28T08:11:58.948Z",
+        "scannedAt": "2025-07-28T08:11:58.948Z",
+        "path": "role/monogent-architect/thought/monogent-architectural-thinking.thought.md"
+      }
+    }
+  ],
+  "stats": {
+    "totalResources": 3,
+    "byProtocol": {
+      "execution": 1,
+      "role": 1,
+      "thought": 1
+    },
+    "bySource": {
+      "project": 3
+    }
+  }
+}

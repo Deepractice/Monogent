@@ -1,0 +1,37 @@
+{
+  "name": "@monogent/cortex",
+  "version": "0.0.1",
+  "description": "Monogent大脑皮层系统 - 高级认知功能、推理和决策中心",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "test:watch": "vitest watch",
+    "lint": "eslint src/**/*.ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "monogent",
+    "cortex",
+    "cognition",
+    "reasoning",
+    "ai"
+  ],
+  "dependencies": {
+    "@monogent/hippocampus": "workspace:*"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.1"
+  }
+}

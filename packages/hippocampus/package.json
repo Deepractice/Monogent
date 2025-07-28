@@ -1,0 +1,37 @@
+{
+  "name": "@monogent/hippocampus",
+  "version": "0.0.1",
+  "description": "Monogent海马体记忆系统 - 基于认知心理学的记忆形成与检索引擎",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "test:watch": "vitest watch",
+    "lint": "eslint src/**/*.ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "monogent",
+    "hippocampus",
+    "memory",
+    "cognitive",
+    "ai"
+  ],
+  "dependencies": {
+    "@monogent/logger": "workspace:*"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.1"
+  }
+}

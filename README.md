@@ -1,48 +1,85 @@
-# Monogent: AI Individual Cognitive System (AICS)
-# Monogent：人工智能个体认知系统
+# Monogent - AI个体认知系统
 
-A theoretical framework and implementation for understanding AI cognition through dual-layer architecture.
+基于认知心理学的AI记忆架构，构建真正的个体认知系统。
 
-一个通过双层架构理解AI认知的理论框架和实现。
+## 🧠 核心理念
 
-## About | 关于
+Monogent 不是传统的 RAG 系统，而是模拟人类认知过程的个体认知系统。每个 Monogent 都是一个独立的认知个体，具有：
 
-Monogent (Mono + Agent) emphasizes the unique cognitive system of each AI agent, distinguishing between:
-- **Knowledge Layer**: Shared consensus from pre-training
-- **Experience Layer**: Individual private memories and semantic networks
+- **神经架构设计**：基于认知心理学的神经节点模型
+- **语义计算能力**：五维度语义（时间、空间、因果、情感、社会）的完整计算
+- **分布式记忆网络**：去中心化的认知记忆系统
+- **个体认知边界**：每个个体有明确的认知能力边界和扩展机制
 
-Monogent（单一+智能体）强调每个AI智能体的独特认知系统，区分了：
-- **知识层**：来自预训练的共享共识
-- **经验层**：个体的私有记忆和语义网络
+## 🚀 快速开始
 
-## License | 许可证
+### 环境要求
 
-This project uses dual licensing:
+- Node.js >= 20.0.0
+- pnpm >= 8.15.0
 
-- **Documentation & Theory**: CC BY 4.0 International (see LICENSE-DOCS)
-- **Source Code**: MIT License (see LICENSE-CODE)
+### 安装依赖
 
-本项目采用双重许可：
+```bash
+pnpm install
+```
 
-- **文档与理论**：CC BY 4.0 国际许可协议（见 LICENSE-DOCS）
-- **源代码**：MIT 许可证（见 LICENSE-CODE）
+### 开发模式
 
-## Structure | 结构
+```bash
+pnpm dev
+```
+
+### 构建项目
+
+```bash
+pnpm build
+```
+
+### 运行测试
+
+```bash
+pnpm test
+```
+
+## 📦 项目结构
 
 ```
 Monogent/
-├── docs/           # Theory and documentation | 理论与文档
-│   └── whitepaper/ # AICS White Paper | AICS 白皮书
-├── src/            # Implementation | 实现
-│   └── implementation/
-└── examples/       # Usage examples | 使用示例
+├── packages/          # 核心包目录
+│   ├── core/         # 核心认知引擎
+│   ├── memory/       # 记忆系统
+│   ├── semantic/     # 语义计算引擎
+│   └── utils/        # 工具函数
+├── apps/             # 应用目录
+├── docs/             # 文档
+└── scripts/          # 脚本工具
 ```
 
-## Contact | 联系
+## 🧪 测试策略
 
-- Organization: Deepractice
-- Project: Monogent Theory
-- Year: 2025
+采用混合式测试文件组织：
+- 单元测试与源代码就近放置（`*.test.ts`）
+- 集成测试集中在 `__tests__/integration/`
+- E2E 测试集中在 `__tests__/e2e/`
+
+## 🛠️ 技术栈
+
+- **运行时**: Node.js 20+
+- **语言**: TypeScript 5.3+
+- **包管理**: pnpm workspace
+- **构建**: Turbo + tsup
+- **测试**: Vitest
+- **代码规范**: ESLint 9 + Prettier
+
+## 📄 许可证
+
+MIT License
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request！
 
 ---
-*Making AI cognition tangible | 让AI认知触手可及*
+
+> "个体认知系统优于RAG，语义的五维度可计算性是关键。" - Sean
