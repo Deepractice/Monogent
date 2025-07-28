@@ -122,3 +122,7 @@ temp
 # package-lock.json
 # yarn.lock
 # pnpm-lock.yaml
+
+# PromptX configuration
+.promptx/*
+!.promptx/pouch.json
