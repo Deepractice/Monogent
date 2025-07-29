@@ -21,6 +21,6 @@ import { Computation } from '../substrate/Computation.js'
  * - Implemented as Computation due to deterministic nature
  */
 export interface Sensation extends Computation {
-  // Inherits compute<TOutput>(elaboration: Elaboration): TOutput
-  // No additional methods needed - sensation is pure computation
+  // Inherits evolve<TInput, TOutput>(input: TInput): TOutput
+  // Transforms raw stimuli into neural signals through deterministic transduction
 }

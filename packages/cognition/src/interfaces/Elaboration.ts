@@ -1,57 +1,31 @@
+import { Evolution } from './substrate/Evolution.js'
+
 /**
- * Elaboration Interface
+ * Elaboration Interface - Meta-Evolution
  * 
- * Core abstraction for cognitive processing that carries context across stages
- * and orchestrates the flow of information through the cognitive pipeline.
+ * The highest-order Evolution that orchestrates the unfolding of cognition
+ * through multiple stages. It is the "evolution of evolutions."
  * 
  * Theoretical Foundation:
  * - Elaborative Processing: "The process of adding meaning and associations
  *   to information" (Craik & Lockhart, 1972, "Levels of Processing")
- * - Elaboration Likelihood Model: Context influences processing depth
- *   (Petty & Cacioppo, 1986)
- * - Working Memory as Processing Space: "Not just storage but active processing"
- *   (Baddeley & Hitch, 1974; Baddeley, 2000)
+ * - Global Workspace Theory: Shared context for cognitive processes
+ *   (Baars, 1988; Dehaene & Naccache, 2001)
+ * - Process Philosophy: "Actual entities are drops of experience"
+ *   (Whitehead, 1929, "Process and Reality")
  * 
  * Design Philosophy:
- * - Elaboration serves dual roles:
- *   1. Context carrier: Maintains cognitive state across stages
- *   2. Process orchestrator: Coordinates the cognitive pipeline
- * - Each cognitive stage receives the same Elaboration instance
- * - Stages read from and write to the shared elaboration context
+ * - Elaboration is a meta-process that evolves through sub-evolutions
+ * - Each cognitive stage is a step in the elaboration's evolution
+ * - Context accumulates as elaboration unfolds through stages
+ * - The final state emerges from the composition of all sub-evolutions
  * 
- * Biological Analogy:
- * - Like cerebrospinal fluid that bathes all brain regions
- * - Or like the global workspace in Global Workspace Theory
- *   (Baars, 1988; Dehaene & Naccache, 2001)
+ * Functional Programming Perspective:
+ * - Elaboration as Monad: carries context through transformations
+ * - Cognitive pipeline as function composition
+ * - Lazy evaluation until final execution
  */
-export interface Elaboration {
-  /**
-   * Process information through the cognitive pipeline
-   * Orchestrates the flow through all cognitive stages
-   */
-  process(): Promise<void>
-  
-  /**
-   * Current focus of processing
-   * What aspect of information is being elaborated
-   */
-  focus?: string
-  
-  /**
-   * Depth of processing
-   * From shallow (perceptual) to deep (semantic)
-   */
-  depth?: 'shallow' | 'intermediate' | 'deep'
-  
-  /**
-   * Processing strategy
-   * How information should be elaborated
-   */
-  strategy?: 'automatic' | 'controlled' | 'mixed'
-  
-  /**
-   * Additional context that accumulates during processing
-   * Stages can read and write to this shared context
-   */
-  context?: Record<string, unknown>
+export interface Elaboration extends Evolution {
+  // Inherits evolve<TInput, TOutput>(input: TInput): TOutput | Promise<TOutput>
+  // Evolves through the entire cognitive pipeline, returning enriched result
 }

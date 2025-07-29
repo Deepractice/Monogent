@@ -1,10 +1,10 @@
-import { Generation } from '../substrate/Generation.js'
+import { Computation } from '../substrate/Computation.js'
 
 /**
  * Integration Stage Interface
  * 
- * Integrates new episodic experiences into existing cognitive maps,
- * updating personal knowledge structures and completing the cognitive cycle.
+ * Constructs and updates hippocampal network structures by establishing
+ * physical connections between memory representations.
  * 
  * Theoretical Foundation:
  * - Cognitive Maps: "Mental representations of spatial and conceptual relationships"
@@ -17,22 +17,23 @@ import { Generation } from '../substrate/Generation.js'
  *   with slow cortical learning" (McClelland et al., 1995; Kumaran et al., 2016)
  * 
  * Neuroscience Mechanisms:
- * - Systems Consolidation: Hippocampal-neocortical transfer
- *   (Dudai et al., 2015; Moscovitch et al., 2006)
- * - Schema-dependent Learning: vmPFC mediates rapid consolidation
- *   (Tse et al., 2007; van Kesteren et al., 2010)
- * - Memory Transformation: From episodic to semantic
- *   (Winocur et al., 2010; Robin & Moscovitch, 2017)
+ * - Synaptic Plasticity: Physical changes in neural connections
+ *   (Bliss & Lømo, 1973; Martin et al., 2000)
+ * - Place Cells & Grid Cells: Spatial and relational mapping
+ *   (O'Keefe & Dostrovsky, 1971; Hafting et al., 2005)
+ * - Network Topology: Graph-like structure of memory networks
+ *   (Battaglia et al., 2012; Schapiro et al., 2017)
  * 
- * Design Implications:
- * - Generation because it creates new connections and meanings
- * - Updates both hippocampal indices and cortical schemas
- * - Completes the "experience→meaning→semantics→experience" cycle (Issue #12)
+ * Design Rationale:
+ * - Computation because it performs deterministic network operations
+ * - Builds physical graph structures (nodes and edges)
+ * - Algorithmic process of index construction and path finding
+ * - No semantic generation, purely structural manipulation
  * 
- * Critical Function: Enables learning and adaptation by updating
- * cognitive structures based on new experiences
+ * Critical Function: Constructs the physical substrate that enables
+ * memory retrieval and navigation through cognitive space
  */
-export interface Integration extends Generation {
-  // Inherits generate<TOutput>(elaboration: Elaboration): Promise<TOutput>
-  // Generates updated cognitive maps by integrating new experiences
+export interface Integration extends Computation {
+  // Inherits compute<TOutput>(elaboration: Elaboration): TOutput
+  // Computes network updates by establishing memory connections
 }

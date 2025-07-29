@@ -1,22 +1,36 @@
-import { Elaboration } from '../Elaboration.js'
+import { Evolution } from './Evolution.js'
 
 /**
  * Generation Substrate Interface
  * 
- * The fundamental substrate for semantic processing in cognition.
- * Generates outputs through language model capabilities within an elaboration context.
+ * Creative evolution - semantic unfolding of cognitive processes.
+ * Represents transformations that are interpretive and generative.
  * 
- * Design Principle:
- * - All cognitive generation occurs within an Elaboration
- * - The Elaboration provides semantic context and goals
- * - Generation is asynchronous and creative
+ * Theoretical Foundation:
+ * - Generative Linguistics: "Infinite use of finite means"
+ *   (Chomsky, 1965, "Aspects of the Theory of Syntax")
+ * - Type 2 Processing: "Slow, sequential, conscious, controlled"
+ *   (Evans & Stanovich, 2013, "Dual-Process Theories")
+ * - Creative Cognition: "Generation of novel and useful ideas"
+ *   (Finke et al., 1992, "Creative Cognition")
+ * 
+ * Neuroscience Basis:
+ * - Default Mode Network: Creative idea generation
+ *   (Beaty et al., 2016, "Creative Cognition and Brain Network Dynamics")
+ * - Language Areas: Broca's and Wernicke's for semantic processing
+ *   (Hagoort, 2013, "MUC (Memory, Unification, Control)")
+ * 
+ * Design Principles:
+ * - Extends Evolution with asynchronous, creative behavior
+ * - Leverages LLM capabilities for semantic understanding
+ * - Generation is the "creative unfolding" of evolution
+ * 
+ * Examples:
+ * - Pattern interpretation, meaning construction, narrative generation
+ * - Concept formation, metaphor creation, insight generation
+ * - Language production, creative problem solving, hypothesis formation
  */
-export interface Generation {
-  /**
-   * Generate a response within an elaboration context
-   * 
-   * @param elaboration - The cognitive elaboration context
-   * @returns Promise of the generated result
-   */
-  generate<TOutput>(elaboration: Elaboration): Promise<TOutput>
+export interface Generation extends Evolution {
+  // Inherits evolve<TInput, TOutput>(input: TInput): TOutput | Promise<TOutput>
+  // Generation typically returns Promise for async LLM operations
 }
