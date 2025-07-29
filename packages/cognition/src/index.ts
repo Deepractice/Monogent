@@ -21,3 +21,4 @@ export type { Integration } from './interfaces/stages/Integration.js'
 
 // Core types
 export type { Elaboration } from './interfaces/Elaboration.js'
+export type { Experience } from './interfaces/Experience.js'
