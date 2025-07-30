@@ -1,3 +1,4 @@
+import { Experience } from '../Experience.js'
 import { Computation } from '../substrate/Computation.js'
 import { getLogger } from '@monogent/logger'
 
@@ -46,14 +47,29 @@ export interface Association extends Computation {
 export const association: Association = {
   name: 'association',
   
-  evolve<TInput, TOutput>(input: TInput): TOutput {
-    log.debug('Performing pattern completion', { input })
+  async evolve<TInput = unknown, TOutput = unknown>(
+    input: Experience<TInput>
+  ): Promise<Experience<TOutput>> {
+    log.debug('Processing association', { 
+      value: input.value,
+      source: input.source 
+    })
     
-    // TODO: Implement pattern completion for memory retrieval
-    // For now, pass through the input
-    const output = input as unknown as TOutput
+    // TODO: Implement association logic
+    const output: Experience<TOutput> = {
+      value: input.value as unknown as TOutput,
+      source: 'association',
+      context: {
+        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
+        previousSource: input.source,
+        timestamp: Date.now()
+      }
+    }
     
-    log.debug('Memory patterns retrieved', { output })
+    log.debug('Association complete', { 
+      value: output.value,
+      source: output.source 
+    })
     return output
   }
 }

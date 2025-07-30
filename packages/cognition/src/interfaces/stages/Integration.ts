@@ -48,14 +48,29 @@ export interface Integration extends Computation {
 export const integration: Integration = {
   name: 'integration',
   
-  evolve<TInput, TOutput>(input: TInput): TOutput {
-    log.debug('Integrating into cognitive map', { input })
+  async evolve<TInput = unknown, TOutput = unknown>(
+    input: Experience<TInput>
+  ): Promise<Experience<TOutput>> {
+    log.debug('Processing integration', { 
+      value: input.value,
+      source: input.source 
+    })
     
-    // TODO: Implement cognitive map integration
-    // For now, pass through the input
-    const output = input as unknown as TOutput
+    // TODO: Implement integration logic
+    const output: Experience<TOutput> = {
+      value: input.value as unknown as TOutput,
+      source: 'integration',
+      context: {
+        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
+        previousSource: input.source,
+        timestamp: Date.now()
+      }
+    }
     
-    log.debug('Cognitive map updated', { output })
+    log.debug('Integration complete', { 
+      value: output.value,
+      source: output.source 
+    })
     return output
   }
 }

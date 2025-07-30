@@ -36,18 +36,18 @@ export interface Cognition {
   /**
    * Construct a cognitive process for perception
    * 
-   * Returns a function that transforms stimulus into percept:
+   * Returns a function that transforms Experience containing stimulus into Experience containing percept:
    * - Sensation: Transduction of physical stimuli
    * - Perception: Organization into meaningful patterns
    * 
-   * @returns A cognitive process from Stimulus to Experience
+   * @returns A cognitive process transforming Experience
    */
-  perceive<T = unknown>(): (stimulus: Stimulus) => Promise<Experience<T>>
+  perceive<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>>
   
   /**
    * Construct a cognitive process for understanding
    * 
-   * Returns a function that transforms stimulus through:
+   * Returns a function that transforms Experience through:
    * - Sensation: Transduction of physical stimuli
    * - Perception: Organization into meaningful patterns
    * - Representation: Symbolic encoding
@@ -56,9 +56,9 @@ export interface Cognition {
    * - Recollection: Memory reconstruction
    * - Integration: Final understanding
    * 
-   * @returns A cognitive process from Stimulus to Experience
+   * @returns A cognitive process transforming Experience
    */
-  understand<T = unknown>(): (stimulus: Stimulus) => Promise<Experience<T>>
+  understand<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>>
 }
 
 /**
@@ -66,11 +66,11 @@ export interface Cognition {
  * Constructs cognitive processes rather than executing them
  */
 export const cognition: Cognition = {
-  perceive<T = unknown>(): (stimulus: Stimulus) => Promise<Experience<T>> {
+  perceive<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>> {
     return compose<Stimulus, T>(sensation, perception)
   },
   
-  understand<T = unknown>(): (stimulus: Stimulus) => Promise<Experience<T>> {
+  understand<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>> {
     return compose<Stimulus, T>(
       sensation,
       perception,

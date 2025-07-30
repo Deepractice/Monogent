@@ -1,4 +1,5 @@
 import { Evolution } from './Evolution.js'
+import { Experience } from '../Experience.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('computation')
@@ -28,8 +29,9 @@ const log = getLogger('computation')
  * - Logical inference, mathematical calculation, optimization
  */
 export interface Computation extends Evolution {
-  // Inherits evolve<TInput, TOutput>(input: TInput): TOutput
+  // Inherits evolve from Evolution
   // Computation guarantees synchronous execution (no Promise)
+  // Transforms Experience<TInput> → Experience<TOutput> deterministically
 }
 
 /**
@@ -39,14 +41,30 @@ export interface Computation extends Evolution {
 export const computation: Computation = {
   name: 'computation',
   
-  evolve<TInput, TOutput>(input: TInput): TOutput {
-    log.debug('Computing transformation', { input })
+  evolve<TInput = unknown, TOutput = unknown>(
+    input: Experience<TInput>
+  ): Experience<TOutput> {
+    log.debug('Computing transformation', { 
+      value: input.value,
+      source: input.source 
+    })
     
     // TODO: Implement deterministic computation logic
-    // For now, pass through the input
-    const output = input as unknown as TOutput
+    // For now, transform the experience
+    const output: Experience<TOutput> = {
+      value: input.value as unknown as TOutput,
+      source: 'computation',
+      context: {
+        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
+        previousSource: input.source,
+        timestamp: Date.now()
+      }
+    }
     
-    log.debug('Computed output', { output })
+    log.debug('Computed output', { 
+      value: output.value,
+      source: output.source 
+    })
     return output
   }
 }

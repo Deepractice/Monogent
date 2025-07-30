@@ -30,31 +30,24 @@ export interface Experience<T> {
  * Compose multiple Evolution stages into a cognitive pipeline
  * 
  * @param stages The Evolution stages to compose (executed left to right)
- * @returns A function that processes input through all stages and returns an Experience
+ * @returns A function that processes Experience through all stages
  */
 export function compose<TInput = unknown, TOutput = unknown>(
-  ...stages: Array<{ name: string; evolve: (input: any) => any | Promise<any> }>
-): (input: TInput) => Promise<Experience<TOutput>> {
-  return async (input: TInput) => {
-    let value: unknown = input
+  ...stages: Array<{ 
+    name: string
+    evolve: (input: Experience<any>) => Experience<any> | Promise<Experience<any>> 
+  }>
+): (input: Experience<TInput>) => Promise<Experience<TOutput>> {
+  return async (input: Experience<TInput>) => {
+    let current: Experience<any> = input
     
-    // Execute all stages in sequence
+    // Execute all stages in sequence, passing Experience through
     for (const stage of stages) {
-      value = await stage.evolve(value)
+      current = await stage.evolve(current)
     }
     
-    // Get stage names from the Evolution objects
-    const stageNames = stages.map(s => s.name)
-    
-    // Wrap the final result in Experience
-    return {
-      value: value as TOutput,
-      source: stageNames[stageNames.length - 1],
-      context: {
-        pipeline: stageNames,
-        timestamp: Date.now()
-      }
-    }
+    // Return the final Experience with type assertion
+    return current as Experience<TOutput>
   }
 }
 

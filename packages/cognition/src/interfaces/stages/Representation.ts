@@ -1,4 +1,5 @@
 import { Generation } from '../substrate/Generation.js'
+import { Experience } from '../Experience.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('representation')
@@ -31,8 +32,8 @@ const log = getLogger('representation')
  * - Prepares for AMR-like structured representations (Issue #10)
  */
 export interface Representation extends Generation {
-  // Inherits generate<TOutput>(elaboration: Elaboration): Promise<TOutput>
-  // Generates structured symbolic representations from perceptual content
+  // Inherits evolve from Generation (async Experience transformation)
+  // Representation transforms Experience through semantic processing
 }
 
 /**
@@ -42,14 +43,29 @@ export interface Representation extends Generation {
 export const representation: Representation = {
   name: 'representation',
   
-  async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
-    log.debug('Encoding to symbolic representation', { input })
+  async evolve<TInput = unknown, TOutput = unknown>(
+    input: Experience<TInput>
+  ): Promise<Experience<TOutput>> {
+    log.debug('Processing representation', { 
+      value: input.value,
+      source: input.source 
+    })
     
-    // TODO: Implement symbolic representation generation
-    // For now, pass through the input
-    const output = input as unknown as TOutput
+    // TODO: Implement representation logic
+    const output: Experience<TOutput> = {
+      value: input.value as unknown as TOutput,
+      source: 'representation',
+      context: {
+        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
+        previousSource: input.source,
+        timestamp: Date.now()
+      }
+    }
     
-    log.debug('Symbolic representation created', { output })
+    log.debug('Representation complete', { 
+      value: output.value,
+      source: output.source 
+    })
     return output
   }
 }

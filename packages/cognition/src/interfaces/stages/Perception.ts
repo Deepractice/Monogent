@@ -1,4 +1,5 @@
 import { Generation } from '../substrate/Generation.js'
+import { Experience } from '../Experience.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('perception')
@@ -30,8 +31,8 @@ const log = getLogger('perception')
  * (Treisman & Gelade, 1980, Feature Integration Theory)
  */
 export interface Perception extends Generation {
-  // Inherits generate<TOutput>(elaboration: Elaboration): Promise<TOutput>
-  // Perception generates interpretations from sensory signals in elaboration
+  // Inherits evolve from Generation (async Experience transformation)
+  // Perception generates interpretations from sensory Experience
 }
 
 /**
@@ -41,14 +42,30 @@ export interface Perception extends Generation {
 export const perception: Perception = {
   name: 'perception',
   
-  async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
-    log.debug('Organizing sensory patterns', { input })
+  async evolve<TInput = unknown, TOutput = unknown>(
+    input: Experience<TInput>
+  ): Promise<Experience<TOutput>> {
+    log.debug('Organizing sensory patterns', { 
+      value: input.value,
+      source: input.source 
+    })
     
     // TODO: Implement perception pattern recognition
-    // For now, pass through the input
-    const output = input as unknown as TOutput
+    // Transform sensory data into perceptual objects
+    const output: Experience<TOutput> = {
+      value: input.value as unknown as TOutput,
+      source: 'perception',
+      context: {
+        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
+        previousSource: input.source,
+        timestamp: Date.now()
+      }
+    }
     
-    log.debug('Perceptual object formed', { output })
+    log.debug('Perceptual object formed', { 
+      value: output.value,
+      source: output.source 
+    })
     return output
   }
 }

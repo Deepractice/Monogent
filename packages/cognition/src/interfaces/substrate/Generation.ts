@@ -1,4 +1,5 @@
 import { Evolution } from './Evolution.js'
+import { Experience } from '../Experience.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('generation')
@@ -34,8 +35,9 @@ const log = getLogger('generation')
  * - Language production, creative problem solving, hypothesis formation
  */
 export interface Generation extends Evolution {
-  // Inherits evolve<TInput, TOutput>(input: TInput): TOutput | Promise<TOutput>
+  // Inherits evolve from Evolution
   // Generation typically returns Promise for async LLM operations
+  // Transforms Experience<TInput> → Experience<TOutput> creatively
 }
 
 /**
@@ -45,14 +47,30 @@ export interface Generation extends Evolution {
 export const generation: Generation = {
   name: 'generation',
   
-  async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
-    log.debug('Processing input', { input })
+  async evolve<TInput = unknown, TOutput = unknown>(
+    input: Experience<TInput>
+  ): Promise<Experience<TOutput>> {
+    log.debug('Processing input', { 
+      value: input.value,
+      source: input.source 
+    })
     
     // TODO: Implement generative/semantic processing logic
-    // For now, pass through the input
-    const output = input as unknown as TOutput
+    // For now, transform the experience
+    const output: Experience<TOutput> = {
+      value: input.value as unknown as TOutput,
+      source: 'generation',
+      context: {
+        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
+        previousSource: input.source,
+        timestamp: Date.now()
+      }
+    }
     
-    log.debug('Generated output', { output })
+    log.debug('Generated output', { 
+      value: output.value,
+      source: output.source 
+    })
     return output
   }
 }

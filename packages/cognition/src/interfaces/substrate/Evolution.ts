@@ -1,3 +1,5 @@
+import { Experience } from '../Experience.js'
+
 /**
  * Evolution Interface - The Fundamental Abstraction
  * 
@@ -16,11 +18,17 @@
  * - All cognitive processes are forms of evolution
  * - Each step unfolds new possibilities from current state
  * - Evolution can be deterministic (Computation) or creative (Generation)
+ * - All evolution is transformation of Experience
  * 
  * Functional Programming Alignment:
  * - Evolution as pure function transformation
  * - Composable through function composition
  * - Lazy evaluation through pipeline construction
+ * 
+ * Core Insight:
+ * - Cognition is Experience evolving through stages
+ * - Each Evolution transforms Experience to Experience
+ * - Data types are implementation details, not architectural concerns
  */
 export interface Evolution {
   /**
@@ -30,10 +38,16 @@ export interface Evolution {
   readonly name: string
   
   /**
-   * The fundamental operation: evolve from one state to another
+   * The fundamental operation: evolve Experience from one form to another
    * 
-   * @param input The current state or stimulus
-   * @returns The evolved state, either synchronously or asynchronously
+   * This signature enforces that all cognitive transformations operate on Experience.
+   * The specific data types within Experience are not architectural concerns,
+   * allowing maximum flexibility in implementation while maintaining conceptual unity.
+   * 
+   * @param input The current Experience containing some cognitive content
+   * @returns The evolved Experience with transformed content
    */
-  evolve<TInput, TOutput>(input: TInput): TOutput | Promise<TOutput>
+  evolve<TInput = unknown, TOutput = unknown>(
+    input: Experience<TInput>
+  ): Experience<TOutput> | Promise<Experience<TOutput>>
 }

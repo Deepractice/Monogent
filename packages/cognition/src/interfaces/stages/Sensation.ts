@@ -1,4 +1,5 @@
 import { Computation } from '../substrate/Computation.js'
+import { Experience } from '../Experience.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('sensation')
@@ -24,8 +25,9 @@ const log = getLogger('sensation')
  * - Implemented as Computation due to deterministic nature
  */
 export interface Sensation extends Computation {
-  // Inherits evolve<TInput, TOutput>(input: TInput): TOutput
-  // Transforms raw stimuli into neural signals through deterministic transduction
+  // Inherits evolve from Computation (synchronous Experience transformation)
+  // Transforms Experience containing raw stimuli into Experience containing sensory data
+  // Deterministic transduction process
 }
 
 /**
@@ -35,14 +37,35 @@ export interface Sensation extends Computation {
 export const sensation: Sensation = {
   name: 'sensation',
   
-  evolve<TInput, TOutput>(input: TInput): TOutput {
-    log.debug('Transducing stimulus', { input })
+  evolve<TInput = unknown, TOutput = unknown>(
+    input: Experience<TInput>
+  ): Experience<TOutput> {
+    log.debug('Transducing stimulus', { 
+      value: input.value,
+      source: input.source 
+    })
     
     // TODO: Implement sensation transduction
-    // For now, pass through the input
-    const output = input as unknown as TOutput
+    // Transform physical stimulus into sensory data
+    const inputContext = typeof input.context === 'object' && input.context !== null 
+      ? input.context as Record<string, unknown>
+      : {}
     
-    log.debug('Sensory data extracted', { output })
+    const output: Experience<TOutput> = {
+      value: input.value as unknown as TOutput,
+      source: 'sensation',
+      context: {
+        ...inputContext,
+        previousSource: input.source,
+        modality: inputContext.modality || 'unknown',
+        timestamp: Date.now()
+      }
+    }
+    
+    log.debug('Sensory data extracted', { 
+      value: output.value,
+      source: output.source 
+    })
     return output
   }
 }

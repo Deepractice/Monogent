@@ -1,4 +1,5 @@
 import { Generation } from '../substrate/Generation.js'
+import { Experience } from '../Experience.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('activation')
@@ -34,8 +35,8 @@ const log = getLogger('activation')
  * EPISODIC activation (hippocampal) in the Association stage
  */
 export interface Activation extends Generation {
-  // Inherits generate<TOutput>(elaboration: Elaboration): Promise<TOutput>
-  // Generates semantic activations and retrieval cues
+  // Inherits evolve from Generation (async Experience transformation)
+  // Activation transforms Experience through semantic processing
 }
 
 /**
@@ -45,14 +46,29 @@ export interface Activation extends Generation {
 export const activation: Activation = {
   name: 'activation',
   
-  async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
-    log.debug('Activating semantic network', { input })
+  async evolve<TInput = unknown, TOutput = unknown>(
+    input: Experience<TInput>
+  ): Promise<Experience<TOutput>> {
+    log.debug('Processing activation', { 
+      value: input.value,
+      source: input.source 
+    })
     
-    // TODO: Implement semantic network activation
-    // For now, pass through the input
-    const output = input as unknown as TOutput
+    // TODO: Implement activation logic
+    const output: Experience<TOutput> = {
+      value: input.value as unknown as TOutput,
+      source: 'activation',
+      context: {
+        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
+        previousSource: input.source,
+        timestamp: Date.now()
+      }
+    }
     
-    log.debug('Concepts activated', { output })
+    log.debug('Activation complete', { 
+      value: output.value,
+      source: output.source 
+    })
     return output
   }
 }

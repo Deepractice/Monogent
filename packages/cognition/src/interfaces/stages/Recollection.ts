@@ -1,4 +1,5 @@
 import { Generation } from '../substrate/Generation.js'
+import { Experience } from '../Experience.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('recollection')
@@ -37,8 +38,8 @@ const log = getLogger('recollection')
  * Recollection generates experience (qualia)
  */
 export interface Recollection extends Generation {
-  // Inherits generate<TOutput>(elaboration: Elaboration): Promise<TOutput>
-  // Generates conscious episodic experiences from memory patterns
+  // Inherits evolve from Generation (async Experience transformation)
+  // Recollection transforms Experience through semantic processing
 }
 
 /**
@@ -48,14 +49,29 @@ export interface Recollection extends Generation {
 export const recollection: Recollection = {
   name: 'recollection',
   
-  async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
-    log.debug('Reconstructing episodic memory', { input })
+  async evolve<TInput = unknown, TOutput = unknown>(
+    input: Experience<TInput>
+  ): Promise<Experience<TOutput>> {
+    log.debug('Processing recollection', { 
+      value: input.value,
+      source: input.source 
+    })
     
-    // TODO: Implement episodic memory reconstruction
-    // For now, pass through the input
-    const output = input as unknown as TOutput
+    // TODO: Implement recollection logic
+    const output: Experience<TOutput> = {
+      value: input.value as unknown as TOutput,
+      source: 'recollection',
+      context: {
+        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
+        previousSource: input.source,
+        timestamp: Date.now()
+      }
+    }
     
-    log.debug('Experience reconstructed', { output })
+    log.debug('Recollection complete', { 
+      value: output.value,
+      source: output.source 
+    })
     return output
   }
 }
