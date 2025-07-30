@@ -45,6 +45,22 @@ export interface Cognition {
   perceive<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>>
   
   /**
+   * Construct a cognitive process for recognition
+   * 
+   * Returns a function that identifies patterns and activates known concepts:
+   * - Sensation: Transduction of physical stimuli
+   * - Perception: Organization into meaningful patterns
+   * - Representation: Create symbolic encoding
+   * - Activation: Match with known concepts
+   * 
+   * Recognition stops at activation - it identifies "what" but not "what it means".
+   * This is faster than full understanding but deeper than mere perception.
+   * 
+   * @returns A cognitive process for pattern recognition
+   */
+  recognize<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>>
+  
+  /**
    * Construct a cognitive process for understanding
    * 
    * Returns a function that transforms Experience through:
@@ -68,6 +84,15 @@ export interface Cognition {
 export const cognition: Cognition = {
   perceive<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>> {
     return compose<Stimulus, T>(sensation, perception)
+  },
+  
+  recognize<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>> {
+    return compose<Stimulus, T>(
+      sensation,
+      perception,
+      representation,
+      activation
+    )
   },
   
   understand<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>> {

@@ -1,3 +1,4 @@
+import { Experience } from '../Experience.js'
 import { Computation } from '../substrate/Computation.js'
 import { getLogger } from '@monogent/logger'
 
