@@ -1,4 +1,7 @@
 import { Generation } from '../substrate/Generation.js'
+import { getLogger } from '@monogent/logger'
+
+const log = getLogger('representation')
 
 /**
  * Representation Stage Interface
@@ -30,4 +33,21 @@ import { Generation } from '../substrate/Generation.js'
 export interface Representation extends Generation {
   // Inherits generate<TOutput>(elaboration: Elaboration): Promise<TOutput>
   // Generates structured symbolic representations from perceptual content
+}
+
+/**
+ * Default representation implementation
+ * Provides basic symbolic encoding as a starting point
+ */
+export const representation: Representation = {
+  async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
+    log.debug('Encoding to symbolic representation', { input })
+    
+    // TODO: Implement symbolic representation generation
+    // For now, pass through the input
+    const output = input as unknown as TOutput
+    
+    log.debug('Symbolic representation created', { output })
+    return output
+  }
 }

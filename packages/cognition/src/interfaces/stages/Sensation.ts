@@ -1,4 +1,7 @@
 import { Computation } from '../substrate/Computation.js'
+import { getLogger } from '@monogent/logger'
+
+const log = getLogger('sensation')
 
 /**
  * Sensation Stage Interface
@@ -23,4 +26,21 @@ import { Computation } from '../substrate/Computation.js'
 export interface Sensation extends Computation {
   // Inherits evolve<TInput, TOutput>(input: TInput): TOutput
   // Transforms raw stimuli into neural signals through deterministic transduction
+}
+
+/**
+ * Default sensation implementation
+ * Provides basic stimulus transduction as a starting point
+ */
+export const sensation: Sensation = {
+  evolve<TInput, TOutput>(input: TInput): TOutput {
+    log.debug('Transducing stimulus', { input })
+    
+    // TODO: Implement sensation transduction
+    // For now, pass through the input
+    const output = input as unknown as TOutput
+    
+    log.debug('Sensory data extracted', { output })
+    return output
+  }
 }

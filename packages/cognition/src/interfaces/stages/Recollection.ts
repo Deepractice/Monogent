@@ -1,4 +1,7 @@
 import { Generation } from '../substrate/Generation.js'
+import { getLogger } from '@monogent/logger'
+
+const log = getLogger('recollection')
 
 /**
  * Recollection Stage Interface
@@ -36,4 +39,21 @@ import { Generation } from '../substrate/Generation.js'
 export interface Recollection extends Generation {
   // Inherits generate<TOutput>(elaboration: Elaboration): Promise<TOutput>
   // Generates conscious episodic experiences from memory patterns
+}
+
+/**
+ * Default recollection implementation
+ * Provides basic memory reconstruction as a starting point
+ */
+export const recollection: Recollection = {
+  async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
+    log.debug('Reconstructing episodic memory', { input })
+    
+    // TODO: Implement episodic memory reconstruction
+    // For now, pass through the input
+    const output = input as unknown as TOutput
+    
+    log.debug('Experience reconstructed', { output })
+    return output
+  }
 }

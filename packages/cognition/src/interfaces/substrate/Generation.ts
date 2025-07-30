@@ -1,4 +1,7 @@
 import { Evolution } from './Evolution.js'
+import { getLogger } from '@monogent/logger'
+
+const log = getLogger('generation')
 
 /**
  * Generation Substrate Interface
@@ -33,4 +36,21 @@ import { Evolution } from './Evolution.js'
 export interface Generation extends Evolution {
   // Inherits evolve<TInput, TOutput>(input: TInput): TOutput | Promise<TOutput>
   // Generation typically returns Promise for async LLM operations
+}
+
+/**
+ * Default generation implementation
+ * Provides basic generative transformation as a starting point
+ */
+export const generation: Generation = {
+  async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
+    log.debug('Processing input', { input })
+    
+    // TODO: Implement generative/semantic processing logic
+    // For now, pass through the input
+    const output = input as unknown as TOutput
+    
+    log.debug('Generated output', { output })
+    return output
+  }
 }

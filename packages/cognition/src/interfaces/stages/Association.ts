@@ -1,4 +1,7 @@
 import { Computation } from '../substrate/Computation.js'
+import { getLogger } from '@monogent/logger'
+
+const log = getLogger('association')
 
 /**
  * Association Stage Interface
@@ -34,4 +37,21 @@ import { Computation } from '../substrate/Computation.js'
 export interface Association extends Computation {
   // Inherits compute<TOutput>(elaboration: Elaboration): TOutput
   // Computes pattern completion in hippocampus using semantic cues
+}
+
+/**
+ * Default association implementation
+ * Provides basic pattern completion as a starting point
+ */
+export const association: Association = {
+  evolve<TInput, TOutput>(input: TInput): TOutput {
+    log.debug('Performing pattern completion', { input })
+    
+    // TODO: Implement pattern completion for memory retrieval
+    // For now, pass through the input
+    const output = input as unknown as TOutput
+    
+    log.debug('Memory patterns retrieved', { output })
+    return output
+  }
 }

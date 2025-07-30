@@ -1,4 +1,7 @@
 import { Generation } from '../substrate/Generation.js'
+import { getLogger } from '@monogent/logger'
+
+const log = getLogger('perception')
 
 /**
  * Perception Stage Interface
@@ -29,4 +32,21 @@ import { Generation } from '../substrate/Generation.js'
 export interface Perception extends Generation {
   // Inherits generate<TOutput>(elaboration: Elaboration): Promise<TOutput>
   // Perception generates interpretations from sensory signals in elaboration
+}
+
+/**
+ * Default perception implementation
+ * Provides basic pattern recognition as a starting point
+ */
+export const perception: Perception = {
+  async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
+    log.debug('Organizing sensory patterns', { input })
+    
+    // TODO: Implement perception pattern recognition
+    // For now, pass through the input
+    const output = input as unknown as TOutput
+    
+    log.debug('Perceptual object formed', { output })
+    return output
+  }
 }

@@ -1,4 +1,7 @@
 import { Evolution } from './Evolution.js'
+import { getLogger } from '@monogent/logger'
+
+const log = getLogger('computation')
 
 /**
  * Computation Substrate Interface
@@ -27,4 +30,21 @@ import { Evolution } from './Evolution.js'
 export interface Computation extends Evolution {
   // Inherits evolve<TInput, TOutput>(input: TInput): TOutput
   // Computation guarantees synchronous execution (no Promise)
+}
+
+/**
+ * Default computation implementation
+ * Provides basic deterministic transformation as a starting point
+ */
+export const computation: Computation = {
+  evolve<TInput, TOutput>(input: TInput): TOutput {
+    log.debug('Computing transformation', { input })
+    
+    // TODO: Implement deterministic computation logic
+    // For now, pass through the input
+    const output = input as unknown as TOutput
+    
+    log.debug('Computed output', { output })
+    return output
+  }
 }

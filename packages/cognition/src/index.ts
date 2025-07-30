@@ -20,5 +20,8 @@ export type { Recollection } from './interfaces/stages/Recollection.js'
 export type { Integration } from './interfaces/stages/Integration.js'
 
 // Core types
-export type { Elaboration } from './interfaces/Elaboration.js'
+export type { Stimulus } from './interfaces/Stimulus.js'
 export type { Experience } from './interfaces/Experience.js'
+export type { Cognition } from './interfaces/Cognition.js'
+export { cognition } from './interfaces/Cognition.js'
+export type { Elaboration } from './interfaces/Elaboration.js'

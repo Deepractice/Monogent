@@ -1,4 +1,7 @@
 import { Computation } from '../substrate/Computation.js'
+import { getLogger } from '@monogent/logger'
+
+const log = getLogger('integration')
 
 /**
  * Integration Stage Interface
@@ -36,4 +39,21 @@ import { Computation } from '../substrate/Computation.js'
 export interface Integration extends Computation {
   // Inherits compute<TOutput>(elaboration: Elaboration): TOutput
   // Computes network updates by establishing memory connections
+}
+
+/**
+ * Default integration implementation
+ * Provides basic cognitive map construction as a starting point
+ */
+export const integration: Integration = {
+  evolve<TInput, TOutput>(input: TInput): TOutput {
+    log.debug('Integrating into cognitive map', { input })
+    
+    // TODO: Implement cognitive map integration
+    // For now, pass through the input
+    const output = input as unknown as TOutput
+    
+    log.debug('Cognitive map updated', { output })
+    return output
+  }
 }
