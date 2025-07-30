@@ -1,5 +1,5 @@
 import { Experience } from '../Experience.js'
-import { Computation } from '../substrate/Computation.js'
+import { Generation } from '../substrate/Generation.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('discrimination')
@@ -35,13 +35,16 @@ const log = getLogger('discrimination')
  * - Categorical Boundaries: Establishing perceptual categories
  * 
  * Design Decision:
- * - Implemented as Computation (deterministic feature detection)
+ * - Implemented as Generation (requires cortical processing)
+ * - Complex pattern discrimination involves learned categories
+ * - Not just simple feature detection but interpretation
  * - Positioned between sensation and perception
  * - Prevents perceptual confusion by pre-classifying signals
  */
-export interface Discrimination extends Computation {
-  // Inherits evolve from Computation (synchronous Experience transformation)
-  // Discrimination detects differences and establishes boundaries
+export interface Discrimination extends Generation {
+  // Inherits evolve from Generation (async Experience transformation)
+  // Discrimination involves cortical interpretation of differences
+  // Requires learned categories and experience-based boundaries
 }
 
 /**
@@ -51,9 +54,9 @@ export interface Discrimination extends Computation {
 export const discrimination: Discrimination = {
   name: 'discrimination',
   
-  evolve<TInput = unknown, TOutput = unknown>(
+  async evolve<TInput = unknown, TOutput = unknown>(
     input: Experience<TInput>
-  ): Experience<TOutput> {
+  ): Promise<Experience<TOutput>> {
     log.debug('Processing discrimination', { 
       value: input.value,
       source: input.source 
