@@ -13,7 +13,7 @@ async function testPerceive() {
     intensity: 0.8
   }
   
-  log.info('Input stimulus:', stimulus)
+  log.info({ stimulus }, 'Input stimulus')
   
   // Get the perceive process
   const perceiveProcess = cognition.perceive()
@@ -21,11 +21,13 @@ async function testPerceive() {
   // Execute the process
   const result = await perceiveProcess(stimulus)
   
-  log.info('Final Experience:', result)
-  log.info('Experience value:', result.value)
-  log.info('Experience source:', result.source)
-  log.info('Experience context:', result.context)
+  log.info({ experience: result }, 'Final Experience')
+  log.info({ value: result.value }, 'Experience value')
+  log.info({ source: result.source }, 'Experience source')
+  log.info({ context: result.context }, 'Experience context')
 }
 
 // Run the test
-testPerceive().catch(console.error)
+testPerceive().catch((error) => {
+  log.error({ error }, 'Test failed')
+})
