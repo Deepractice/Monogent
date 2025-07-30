@@ -44,6 +44,8 @@ export interface Association extends Computation {
  * Provides basic pattern completion as a starting point
  */
 export const association: Association = {
+  name: 'association',
+  
   evolve<TInput, TOutput>(input: TInput): TOutput {
     log.debug('Performing pattern completion', { input })
     

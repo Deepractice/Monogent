@@ -43,6 +43,8 @@ export interface Activation extends Generation {
  * Provides basic semantic activation as a starting point
  */
 export const activation: Activation = {
+  name: 'activation',
+  
   async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
     log.debug('Activating semantic network', { input })
     

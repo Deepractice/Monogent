@@ -46,6 +46,8 @@ export interface Integration extends Computation {
  * Provides basic cognitive map construction as a starting point
  */
 export const integration: Integration = {
+  name: 'integration',
+  
   evolve<TInput, TOutput>(input: TInput): TOutput {
     log.debug('Integrating into cognitive map', { input })
     

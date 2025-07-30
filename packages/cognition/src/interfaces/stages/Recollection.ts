@@ -46,6 +46,8 @@ export interface Recollection extends Generation {
  * Provides basic memory reconstruction as a starting point
  */
 export const recollection: Recollection = {
+  name: 'recollection',
+  
   async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
     log.debug('Reconstructing episodic memory', { input })
     

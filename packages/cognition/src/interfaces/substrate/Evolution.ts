@@ -24,6 +24,12 @@
  */
 export interface Evolution {
   /**
+   * The name of this evolution stage
+   * Used for tracking and debugging the cognitive pipeline
+   */
+  readonly name: string
+  
+  /**
    * The fundamental operation: evolve from one state to another
    * 
    * @param input The current state or stimulus

@@ -33,6 +33,8 @@ export interface Sensation extends Computation {
  * Provides basic stimulus transduction as a starting point
  */
 export const sensation: Sensation = {
+  name: 'sensation',
+  
   evolve<TInput, TOutput>(input: TInput): TOutput {
     log.debug('Transducing stimulus', { input })
     

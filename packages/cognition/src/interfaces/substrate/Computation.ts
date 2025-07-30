@@ -37,6 +37,8 @@ export interface Computation extends Evolution {
  * Provides basic deterministic transformation as a starting point
  */
 export const computation: Computation = {
+  name: 'computation',
+  
   evolve<TInput, TOutput>(input: TInput): TOutput {
     log.debug('Computing transformation', { input })
     

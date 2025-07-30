@@ -39,6 +39,8 @@ export interface Perception extends Generation {
  * Provides basic pattern recognition as a starting point
  */
 export const perception: Perception = {
+  name: 'perception',
+  
   async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
     log.debug('Organizing sensory patterns', { input })
     

@@ -1,7 +1,12 @@
 import { Stimulus } from './Stimulus.js'
-import { Experience, ExperienceMonad } from './Experience.js'
+import { Experience, compose } from './Experience.js'
 import { sensation } from './stages/Sensation.js'
 import { perception } from './stages/Perception.js'
+import { representation } from './stages/Representation.js'
+import { activation } from './stages/Activation.js'
+import { association } from './stages/Association.js'
+import { recollection } from './stages/Recollection.js'
+import { integration } from './stages/Integration.js'
 
 /**
  * Cognition Interface - The Central Cognitive System
@@ -62,42 +67,18 @@ export interface Cognition {
  */
 export const cognition: Cognition = {
   perceive<T = unknown>(): (stimulus: Stimulus) => Promise<Experience<T>> {
-    // Helper to wrap Evolution into Experience-returning function
-    const wrap = (stage: string, evolution: { evolve: (input: any) => any }) => 
-      (input: any): Experience<any> => ({
-        value: evolution.evolve(input),
-        source: stage,
-        context: { stage, timestamp: Date.now() }
-      })
-    
-    // Build the pipeline
-    const pipeline = async (stimulus: Stimulus) => {
-      let exp = ExperienceMonad.of(stimulus)
-      
-      // Apply sensation
-      exp = ExperienceMonad.flatMap(wrap('sensation', sensation))(exp)
-      
-      // Apply perception (handle async)
-      exp = ExperienceMonad.flatMap(wrap('perception', perception))(exp)
-      
-      // Await if value is Promise
-      if (exp.value instanceof Promise) {
-        exp = { ...exp, value: await exp.value }
-      }
-      
-      return exp as Experience<T>
-    }
-    
-    return pipeline
+    return compose<Stimulus, T>(sensation, perception)
   },
   
   understand<T = unknown>(): (stimulus: Stimulus) => Promise<Experience<T>> {
-    // Construct the understanding process
-    return async (stimulus: Stimulus) => {
-      // TODO: Implement full pipeline
-      // For now, delegate to perceive process
-      const perceiveProcess = this.perceive<T>()
-      return perceiveProcess(stimulus)
-    }
+    return compose<Stimulus, T>(
+      sensation,
+      perception,
+      representation,
+      activation,
+      association,
+      recollection,
+      integration
+    )
   }
 }

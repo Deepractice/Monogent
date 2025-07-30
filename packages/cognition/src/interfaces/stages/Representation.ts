@@ -40,6 +40,8 @@ export interface Representation extends Generation {
  * Provides basic symbolic encoding as a starting point
  */
 export const representation: Representation = {
+  name: 'representation',
+  
   async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
     log.debug('Encoding to symbolic representation', { input })
     

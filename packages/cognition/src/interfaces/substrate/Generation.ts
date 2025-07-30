@@ -43,6 +43,8 @@ export interface Generation extends Evolution {
  * Provides basic generative transformation as a starting point
  */
 export const generation: Generation = {
+  name: 'generation',
+  
   async evolve<TInput, TOutput>(input: TInput): Promise<TOutput> {
     log.debug('Processing input', { input })
     
