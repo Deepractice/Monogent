@@ -12,6 +12,7 @@ export type { Generation } from './interfaces/substrate/Generation.js'
 
 // Cognitive stages
 export type { Sensation } from './interfaces/stages/Sensation.js'
+export type { Discrimination } from './interfaces/stages/Discrimination.js'
 export type { Attention } from './interfaces/stages/Attention.js'
 export type { Perception } from './interfaces/stages/Perception.js'
 export type { Representation } from './interfaces/stages/Representation.js'
@@ -29,6 +30,7 @@ export type { Elaboration } from './interfaces/Elaboration.js'
 
 // Stage implementations
 export { sensation } from './interfaces/stages/Sensation.js'
+export { discrimination } from './interfaces/stages/Discrimination.js'
 export { attention } from './interfaces/stages/Attention.js'
 export { perception } from './interfaces/stages/Perception.js'
 export { representation } from './interfaces/stages/Representation.js'
