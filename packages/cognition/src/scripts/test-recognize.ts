@@ -1,5 +1,5 @@
-import { cognition } from './interfaces/Cognition.js'
-import { Experience } from './interfaces/Experience.js'
+import { cognition } from '../interfaces/Cognition.js'
+import { Experience } from '../interfaces/Experience.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('test-recognize')
