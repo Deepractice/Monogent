@@ -2,12 +2,12 @@ import { Computation } from '../substrate/Computation.js'
 import { Experience } from '../Experience.js'
 import { getLogger } from '@monogent/logger'
 
-const log = getLogger('sensation')
+const log = getLogger('transduction')
 
 /**
- * Sensation Step Interface
+ * Transduction Step Interface
  * 
- * The initial receiving of raw sensory signals.
+ * Converts physical stimuli into neural/computational signals.
  * In LLM context, this is mostly pass-through for text input.
  * 
  * Theoretical Foundation:
@@ -21,15 +21,15 @@ const log = getLogger('sensation')
  * - In multimodal systems, would handle vision/audio/etc.
  * - Currently passes through text input unchanged
  */
-export interface Sensation extends Computation {
+export interface Transduction extends Computation {
   // Inherits evolve from Computation (sync transformation)
 }
 
 /**
- * Default sensation implementation
+ * Default transduction implementation
  */
-export const sensation: Sensation = {
-  name: 'sensation',
+export const transduction: Transduction = {
+  name: 'transduction',
   
   evolve<TInput = unknown, TOutput = unknown>(
     input: Experience<TInput>
@@ -42,7 +42,7 @@ export const sensation: Sensation = {
     // In LLM context, sensation is pass-through
     const output: Experience<TOutput> = {
       value: input.value as unknown as TOutput,
-      source: 'sensation',
+      source: 'transduction',
       context: {
         ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
         modality: 'text',
