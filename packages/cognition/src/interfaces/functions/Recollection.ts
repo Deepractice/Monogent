@@ -33,6 +33,7 @@ export interface Recollection extends Generation {
  */
 export const recollection: Recollection = {
   name: 'recollection',
+  type: 'function',
   
   evolve: episodicRetrieval.evolve
 }

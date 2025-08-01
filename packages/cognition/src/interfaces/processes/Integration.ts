@@ -34,6 +34,7 @@ export interface Integration extends Computation {
  */
 export const integration: Integration = {
   name: 'integration',
+  type: 'process',
   
   evolve<TInput = unknown, TOutput = unknown>(
     input: Experience<TInput>

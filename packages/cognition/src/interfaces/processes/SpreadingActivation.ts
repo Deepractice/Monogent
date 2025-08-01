@@ -32,6 +32,7 @@ export interface SpreadingActivation extends Computation {
  */
 export const spreadingActivation: SpreadingActivation = {
   name: 'spreading-activation',
+  type: 'process',
   
   evolve<TInput = unknown, TOutput = unknown>(
     input: Experience<TInput>

@@ -1,5 +1,5 @@
 import { Computation } from '../substrate/Computation.js'
-import { compose } from '../Experience.js'
+import { compose } from '../substrate/EvolutionComposer.js'
 import { spreadingActivation } from '../processes/SpreadingActivation.js'
 import { associativeBinding } from '../processes/AssociativeBinding.js'
 
@@ -43,9 +43,10 @@ export interface Familiarity extends Computation {
  */
 export const familiarity: Familiarity = {
   name: 'familiarity',
+  type: 'function',
   
   evolve: compose(
     spreadingActivation,
     associativeBinding
-  )
+  ).evolve
 }

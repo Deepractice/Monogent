@@ -32,6 +32,7 @@ export interface SemanticEncoding extends Generation {
  */
 export const semanticEncoding: SemanticEncoding = {
   name: 'semantic-encoding',
+  type: 'process',
   
   async evolve<TInput = unknown, TOutput = unknown>(
     input: Experience<TInput>

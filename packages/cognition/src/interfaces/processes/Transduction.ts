@@ -30,6 +30,7 @@ export interface Transduction extends Computation {
  */
 export const transduction: Transduction = {
   name: 'transduction',
+  type: 'process',
   
   evolve<TInput = unknown, TOutput = unknown>(
     input: Experience<TInput>

@@ -32,6 +32,7 @@ export interface EpisodicRetrieval extends Generation {
  */
 export const episodicRetrieval: EpisodicRetrieval = {
   name: 'episodic-retrieval',
+  type: 'process',
   
   async evolve<TInput = unknown, TOutput = unknown>(
     input: Experience<TInput>

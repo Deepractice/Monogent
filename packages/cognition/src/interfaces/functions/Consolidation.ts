@@ -39,6 +39,7 @@ export interface Consolidation extends Computation {
  */
 export const consolidation: Consolidation = {
   name: 'consolidation',
+  type: 'function',
   
   evolve: integration.evolve
 }

@@ -32,6 +32,7 @@ export interface Categorization extends Generation {
  */
 export const categorization: Categorization = {
   name: 'categorization',
+  type: 'process',
   
   async evolve<TInput = unknown, TOutput = unknown>(
     input: Experience<TInput>

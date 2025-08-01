@@ -32,6 +32,7 @@ export interface Abstraction extends Generation {
  */
 export const abstraction: Abstraction = {
   name: 'abstraction',
+  type: 'process',
   
   async evolve<TInput = unknown, TOutput = unknown>(
     input: Experience<TInput>

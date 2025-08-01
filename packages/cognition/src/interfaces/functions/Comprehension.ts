@@ -1,5 +1,5 @@
 import { Generation } from '../substrate/Generation.js'
-import { compose } from '../Experience.js'
+import { compose } from '../substrate/EvolutionComposer.js'
 import { semanticEncoding } from '../processes/SemanticEncoding.js'
 import { categorization } from '../processes/Categorization.js'
 import { abstraction } from '../processes/Abstraction.js'
@@ -33,10 +33,11 @@ export interface Comprehension extends Generation {
  */
 export const comprehension: Comprehension = {
   name: 'comprehension',
+  type: 'function',
   
   evolve: compose(
     semanticEncoding,
     categorization,
     abstraction
-  )
+  ).evolve
 }

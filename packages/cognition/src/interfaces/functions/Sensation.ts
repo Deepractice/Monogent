@@ -1,5 +1,5 @@
 import { Computation } from '../substrate/Computation.js'
-import { compose } from '../Experience.js'
+import { compose } from '../substrate/EvolutionComposer.js'
 import { transduction } from '../processes/Transduction.js'
 import { sensoryGating } from '../processes/SensoryGating.js'
 
@@ -31,9 +31,10 @@ export interface Sensation extends Computation {
  */
 export const sensation: Sensation = {
   name: 'sensation',
+  type: 'function',
   
   evolve: compose(
     transduction,
     sensoryGating
-  )
+  ).evolve
 }

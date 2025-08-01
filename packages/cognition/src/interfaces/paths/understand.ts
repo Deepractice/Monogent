@@ -1,5 +1,5 @@
 import { Evolution } from '../substrate/Evolution.js'
-import { compose } from '../Experience.js'
+import { compose } from '../substrate/EvolutionComposer.js'
 import { sensation } from '../functions/Sensation.js'
 import { perception } from '../functions/Perception.js'
 import { comprehension } from '../functions/Comprehension.js'
@@ -42,6 +42,7 @@ import { consolidation } from '../functions/Consolidation.js'
  */
 export const understand: Evolution = {
   name: 'understand',
+  type: 'path',
   
   evolve: compose(
     sensation,
@@ -50,5 +51,5 @@ export const understand: Evolution = {
     familiarity,
     recollection,
     consolidation
-  )
+  ).evolve
 }

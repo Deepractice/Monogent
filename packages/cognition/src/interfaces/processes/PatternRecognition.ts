@@ -32,6 +32,7 @@ export interface PatternRecognition extends Generation {
  */
 export const patternRecognition: PatternRecognition = {
   name: 'pattern-recognition',
+  type: 'process',
   
   async evolve<TInput = unknown, TOutput = unknown>(
     input: Experience<TInput>

@@ -32,6 +32,7 @@ export interface FeatureDetection extends Generation {
  */
 export const featureDetection: FeatureDetection = {
   name: 'feature-detection',
+  type: 'process',
   
   async evolve<TInput = unknown, TOutput = unknown>(
     input: Experience<TInput>

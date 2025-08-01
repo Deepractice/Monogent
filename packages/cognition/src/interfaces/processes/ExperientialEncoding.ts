@@ -29,6 +29,7 @@ export interface ExperientialEncoding extends Computation {
  */
 export const experientialEncoding: ExperientialEncoding = {
   name: 'experiential-encoding',
+  type: 'process',
   
   evolve<T>(input: any): Experience<T> {
     // If already an Experience, return as is

@@ -38,6 +38,14 @@ export interface Evolution {
   readonly name: string
   
   /**
+   * The type of evolution - determines composition strategy
+   * - 'process': Micro-evolution within a cognitive stage (no new Experience)
+   * - 'function': Macro-evolution producing new cognitive experience
+   * - 'path': Composite of functions
+   */
+  readonly type?: 'process' | 'function' | 'path'
+  
+  /**
    * The fundamental operation: evolve Experience from one form to another
    * 
    * This signature enforces that all cognitive transformations operate on Experience.

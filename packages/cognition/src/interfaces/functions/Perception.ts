@@ -1,5 +1,5 @@
 import { Generation } from '../substrate/Generation.js'
-import { compose } from '../Experience.js'
+import { compose } from '../substrate/EvolutionComposer.js'
 import { featureDetection } from '../processes/FeatureDetection.js'
 import { patternRecognition } from '../processes/PatternRecognition.js'
 
@@ -31,9 +31,10 @@ export interface Perception extends Generation {
  */
 export const perception: Perception = {
   name: 'perception',
+  type: 'function',
   
   evolve: compose(
     featureDetection,
     patternRecognition
-  )
+  ).evolve
 }

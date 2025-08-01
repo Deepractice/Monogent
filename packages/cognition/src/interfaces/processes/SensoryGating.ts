@@ -32,6 +32,7 @@ export interface SensoryGating extends Computation {
  */
 export const sensoryGating: SensoryGating = {
   name: 'sensory-gating',
+  type: 'process',
   
   evolve<TInput = unknown, TOutput = unknown>(
     input: Experience<TInput>

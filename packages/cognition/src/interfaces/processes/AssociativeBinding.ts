@@ -32,6 +32,7 @@ export interface AssociativeBinding extends Computation {
  */
 export const associativeBinding: AssociativeBinding = {
   name: 'associative-binding',
+  type: 'process',
   
   evolve<TInput = unknown, TOutput = unknown>(
     input: Experience<TInput>
