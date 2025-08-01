@@ -1,109 +1,52 @@
-import { Stimulus } from './Stimulus.js'
-import { Experience, compose } from './Experience.js'
-import { sensation } from './stages/Sensation.js'
-import { perception } from './stages/Perception.js'
-import { representation } from './stages/Representation.js'
-import { activation } from './stages/Activation.js'
-import { association } from './stages/Association.js'
-import { recollection } from './stages/Recollection.js'
-import { integration } from './stages/Integration.js'
+import { Evolution } from './substrate/Evolution.js'
+import { understand } from './paths/understand.js'
 
 /**
- * Cognition Interface - The Central Cognitive System
+ * Cognition Interface - Gateway to Cognitive Paths
  * 
- * The fundamental interface for cognitive processing, transforming
- * stimuli into understanding through a pipeline of cognitive evolutions.
- * 
- * Theoretical Foundation:
- * - Information Processing Theory: "Cognition as transformation of information"
- *   (Atkinson & Shiffrin, 1968; Neisser, 1967)
- * - Standard Model of the Mind: Consensus across cognitive architectures
- *   (Laird, Lebiere & Rosenbloom, 2017)
- * - Global Workspace Theory: "Understanding as global integration"
- *   (Baars, 1988; Dehaene & Naccache, 2001)
+ * A simple entry point for accessing various cognitive paths.
+ * Each path represents a specific combination of cognitive functions
+ * designed for different types of cognitive tasks.
  * 
  * Design Philosophy:
- * - Cognition constructs processes, not results
- * - Processes are composed before execution
- * - Separation of construction and execution
+ * - Cognition is the orchestrator of paths
+ * - Paths are pre-configured function combinations
+ * - Each path is optimized for specific cognitive tasks
  * 
- * Process Philosophy:
- * - Cognition is the process of Experience evolving through stages
- * - Each stage transforms Experience into richer forms
- * - Understanding emerges from the complete transformation
+ * Theoretical Foundation:
+ * - Multiple Routes to Cognition: Different tasks require different processes
+ *   (Dual-route models, Coltheart et al., 2001)
+ * - Cognitive Flexibility: Adaptive path selection based on task demands
+ *   (Diamond, 2013; Miyake et al., 2000)
+ * - Process vs Product: Focus on the journey, not just the destination
+ *   (Marr, 1982, levels of analysis)
  */
 export interface Cognition {
   /**
-   * Construct a cognitive process for perception
+   * Get the understand path - Deep understanding through memory integration
    * 
-   * Returns a function that transforms Experience containing stimulus into Experience containing percept:
-   * - Sensation: Transduction of physical stimuli
-   * - Perception: Organization into meaningful patterns
+   * The most complete cognitive path that integrates new information
+   * with existing knowledge. Includes all cognitive functions:
+   * Sensation → Perception → Comprehension → Familiarity → Recollection → Consolidation
    * 
-   * @returns A cognitive process transforming Experience
+   * @returns The understand path evolution
    */
-  perceive<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>>
+  understand(): Evolution
   
-  /**
-   * Construct a cognitive process for recognition
-   * 
-   * Returns a function that identifies patterns and activates known concepts:
-   * - Sensation: Transduction of physical stimuli
-   * - Perception: Organization into meaningful patterns
-   * - Representation: Create symbolic encoding
-   * - Activation: Match with known concepts
-   * 
-   * Recognition stops at activation - it identifies "what" but not "what it means".
-   * This is faster than full understanding but deeper than mere perception.
-   * 
-   * @returns A cognitive process for pattern recognition
-   */
-  recognize<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>>
-  
-  /**
-   * Construct a cognitive process for understanding
-   * 
-   * Returns a function that transforms Experience through:
-   * - Sensation: Transduction of physical stimuli
-   * - Perception: Organization into meaningful patterns
-   * - Representation: Symbolic encoding
-   * - Activation: Concept activation
-   * - Association: Pattern completion
-   * - Recollection: Memory reconstruction
-   * - Integration: Final understanding
-   * 
-   * @returns A cognitive process transforming Experience
-   */
-  understand<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>>
+  // Future paths can be added here:
+  // reflect(): Evolution     // Simple reflex path
+  // perceive(): Evolution    // Basic perception path
+  // recall(): Evolution      // Memory retrieval path
+  // learn(): Evolution       // New knowledge acquisition path
+  // think(): Evolution       // Internal thinking loop path
 }
 
 /**
- * Default cognition implementation as a singleton object
- * Constructs cognitive processes rather than executing them
+ * Default cognition implementation
+ * Provides access to all cognitive paths
  */
 export const cognition: Cognition = {
-  perceive<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>> {
-    return compose<Stimulus, T>(sensation, perception)
-  },
-  
-  recognize<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>> {
-    return compose<Stimulus, T>(
-      sensation,
-      perception,
-      representation,
-      activation
-    )
-  },
-  
-  understand<T = unknown>(): (stimulus: Experience<Stimulus>) => Promise<Experience<T>> {
-    return compose<Stimulus, T>(
-      sensation,
-      perception,
-      representation,
-      activation,
-      association,
-      recollection,
-      integration
-    )
+  understand(): Evolution {
+    return understand
   }
 }
