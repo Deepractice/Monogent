@@ -1,5 +1,7 @@
 import { Generation } from '../substrate/Generation.js'
 import { compose } from '../substrate/EvolutionComposer.js'
+import { sensation } from '../processes/Sensation.js'
+import { sensoryGating } from '../processes/SensoryGating.js'
 import { featureDetection } from '../processes/FeatureDetection.js'
 import { patternRecognition } from '../processes/PatternRecognition.js'
 
@@ -18,8 +20,10 @@ import { patternRecognition } from '../processes/PatternRecognition.js'
  *   (Rao & Ballard, 1999; Clark, 2013; Hohwy, 2013)
  * 
  * Composes:
- * 1. FeatureDetection: Extract basic features (with LLM interpretation)
- * 2. PatternRecognition: Form perceptual wholes
+ * 1. Sensation: Receive external stimuli
+ * 2. SensoryGating: Filter relevant sensory information  
+ * 3. FeatureDetection: Extract basic features (with LLM interpretation)
+ * 4. PatternRecognition: Form perceptual wholes
  */
 export interface Perception extends Generation {
   // Inherits async evolve from Generation
@@ -34,6 +38,8 @@ export const perception: Perception = {
   type: 'function',
   
   evolve: compose(
+    sensation,
+    sensoryGating,
     featureDetection,
     patternRecognition
   ).evolve

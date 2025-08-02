@@ -1,11 +1,10 @@
 import { Evolution } from '../substrate/Evolution.js'
 import { compose } from '../substrate/EvolutionComposer.js'
-import { sensation } from '../functions/Sensation.js'
 import { perception } from '../functions/Perception.js'
 import { comprehension } from '../functions/Comprehension.js'
 import { familiarity } from '../functions/Familiarity.js'
 import { recollection } from '../functions/Recollection.js'
-import { consolidation } from '../functions/Consolidation.js'
+import { consolidation } from '../processes/Consolidation.js'
 
 /**
  * Understand Path - Deep understanding through memory integration
@@ -14,7 +13,7 @@ import { consolidation } from '../functions/Consolidation.js'
  * with existing knowledge to form deep understanding.
  * 
  * Path Structure:
- * Sensation → Perception → Comprehension → Familiarity → Recollection → Consolidation
+ * Perception → Comprehension → Familiarity → Recollection → Consolidation
  * 
  * Theoretical Foundation:
  * - Meaningful Learning Theory: Understanding through connection to prior knowledge
@@ -32,8 +31,7 @@ import { consolidation } from '../functions/Consolidation.js'
  * 
  * Example:
  * Input: "Quantum entanglement is like..."
- * - Sensation: Receive text
- * - Perception: Parse sentence structure
+ * - Perception: Receive and parse sentence structure
  * - Comprehension: Understand quantum entanglement concept
  * - Familiarity: Recognize related physics concepts
  * - Recollection: Retrieve knowledge about quantum mechanics
@@ -45,7 +43,6 @@ export const understand: Evolution = {
   type: 'path',
   
   evolve: compose(
-    sensation,
     perception,
     comprehension,
     familiarity,
