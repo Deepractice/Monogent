@@ -1,5 +1,7 @@
-import { Computation } from '../substrate/Computation.js'
+import { Computation, defineComputation } from '../substrate/Computation.js'
 import { Experience } from '../Experience.js'
+import { Elaboration } from '../substrate/Elaboration.js'
+import { Stimulus } from '../Stimulus.js'
 
 /**
  * Experiential Encoding Process Interface
@@ -20,29 +22,44 @@ import { Experience } from '../Experience.js'
  * - Marks the entry point into cognition
  */
 export interface ExperientialEncoding extends Computation {
-  // Overrides the standard evolve signature
-  evolve<T>(input: any): Experience<T>
+  // Special computation that can accept raw Stimulus
+  encode(stimulus: Stimulus): Experience
 }
 
 /**
  * Default experiential encoding implementation
+ * Converts raw stimuli into Experience format
  */
 export const experientialEncoding: ExperientialEncoding = {
-  name: 'experiential-encoding',
-  type: 'process',
+  ...defineComputation({
+    name: 'experiential-encoding',
+    
+    elaborate(previous?: Elaboration): Elaboration {
+      return {
+        prompt: `体验编码：
+    1. 识别原始输入类型
+    2. 转换为认知系统可处理格式
+    3. 标记初始元数据
+    请将外部刺激转化为体验格式。`,
+        source: 'experiential-encoding',
+        previous
+      }
+    }
+  }),
   
-  evolve<T>(input: any): Experience<T> {
-    // If already an Experience, return as is
-    if (input && typeof input === 'object' && 'value' in input) {
-      return input as Experience<T>
+  encode(stimulus: Stimulus): Experience {
+    // Create initial Experience from stimulus
+    const elaboration: Elaboration = {
+      prompt: `初始体验编码：将外部刺激"${JSON.stringify(stimulus).slice(0, 100)}..."转化为认知体验。`,
+      source: 'experiential-encoding'
     }
     
-    // Create new Experience from raw input
     return {
-      value: input as T,
-      source: 'encoded',
-      context: {
-        timestamp: Date.now()
+      elaboration,
+      source: 'experiential-encoding',
+      metadata: {
+        timestamp: Date.now(),
+        stimulusType: typeof stimulus
       }
     }
   }

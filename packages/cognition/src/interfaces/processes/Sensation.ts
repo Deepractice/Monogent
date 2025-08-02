@@ -1,9 +1,6 @@
-import { Computation } from '../substrate/Computation.js'
+import { Computation, defineComputation } from '../substrate/Computation.js'
 import { Experience } from '../Experience.js'
-import { Stimulus } from '../Stimulus.js'
-import { getLogger } from '@monogent/logger'
-
-const log = getLogger('sensation')
+import { Elaboration } from '../substrate/Elaboration.js'
 
 /**
  * Sensation Process Interface
@@ -32,39 +29,29 @@ export interface Sensation extends Computation {
 
 /**
  * Default sensation implementation
- * Special case: can accept either Stimulus or Experience as input
+ * First process in cognitive chain - receives external stimuli
  */
-export const sensation: Sensation = {
+export const sensation: Sensation = defineComputation({
   name: 'sensation',
-  type: 'process',
   
-  evolve<TInput = unknown, TOutput = unknown>(
-    input: Experience<TInput> | TInput
-  ): Experience<TOutput> {
-    // Check if input is already an Experience
-    if (input && typeof input === 'object' && 'value' in input) {
-      // Already an Experience, just pass through
-      log.debug('Passing through existing experience', { 
-        value: (input as Experience<TInput>).value,
-        source: (input as Experience<TInput>).source 
-      })
-      return input as unknown as Experience<TOutput>
-    }
-    
-    // Input is a raw Stimulus, create initial Experience
-    log.debug('Sensing external stimulus', { stimulus: input })
-    
-    const experience: Experience<TOutput> = {
-      value: input as unknown as TOutput,
+  elaborate(previous?: Elaboration): Elaboration {
+    return {
+      prompt: `初始感知处理：
+    1. 识别输入的基本特征：
+       - 数据类型和格式
+       - 信息量和复杂度
+       - 时序/空间分布特征
+    2. 检测显著性信号：
+       - 重复模式
+       - 异常或突变
+       - 关键标记或边界
+    3. 评估信息结构：
+       - 层次关系
+       - 密度分布
+       - 潜在的组织模式
+    请进行初步感知分析，为后续处理提供方向。`,
       source: 'sensation',
-      context: {
-        modality: 'text', // In LLM context, primarily text
-        timestamp: Date.now(),
-        type: 'initial-sensation'
-      }
+      previous
     }
-    
-    log.debug('Initial experience created', { experience })
-    return experience
   }
-}
+})

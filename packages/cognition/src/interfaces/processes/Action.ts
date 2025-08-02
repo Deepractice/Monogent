@@ -1,5 +1,5 @@
-import { Computation } from '../substrate/Computation.js'
-import { Experience } from '../Experience.js'
+import { Computation, defineComputation } from '../substrate/Computation.js'
+import { Elaboration } from '../substrate/Elaboration.js'
 
 /**
  * Action Process Interface
@@ -33,26 +33,21 @@ export interface Action extends Computation {
 
 /**
  * Default action implementation
+ * Executes decisions in the external world
  */
-export const action: Action = {
+export const action: Action = defineComputation({
   name: 'action',
-  type: 'process',
   
-  evolve<TInput = unknown, TOutput = unknown>(
-    input: Experience<TInput>
-  ): Experience<TOutput> {
-    // TODO: Implement action execution
-    // For now, pass through
+  elaborate(previous?: Elaboration): Elaboration {
     return {
-      value: input.value as unknown as TOutput,
+      prompt: `执行动作决策：
+    1. 分析需要执行的动作类型
+    2. 确定执行参数和目标
+    3. 选择适当的工具或API
+    4. 评估执行风险和影响
+    请描述如何将认知决策转化为实际行动。`,
       source: 'action',
-      context: {
-        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
-        previousSource: input.source,
-        actionType: 'pending-implementation',
-        description: 'Action execution placeholder',
-        timestamp: Date.now()
-      }
+      previous
     }
   }
-}
+})

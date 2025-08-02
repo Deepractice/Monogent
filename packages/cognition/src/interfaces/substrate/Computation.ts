@@ -1,5 +1,6 @@
 import { Evolution } from './Evolution.js'
 import { Experience } from '../Experience.js'
+import { Elaboration } from './Elaboration.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('computation')
@@ -31,40 +32,48 @@ const log = getLogger('computation')
 export interface Computation extends Evolution {
   // Inherits evolve from Evolution
   // Computation guarantees synchronous execution (no Promise)
-  // Transforms Experience<TInput> → Experience<TOutput> deterministically
+  
+  /**
+   * Create an elaboration based on previous elaborations
+   * This is the core method that processes implement
+   * 
+   * @param previous The previous elaboration in the chain (if any)
+   * @returns A new elaboration with this process's contribution
+   */
+  elaborate(previous?: Elaboration): Elaboration
 }
 
 /**
- * Default computation implementation
- * Provides basic deterministic transformation as a starting point
+ * Factory function to define a Computation process
+ * Similar to Vue's defineComponent, provides a clean API for creating processes
+ * 
+ * @param options The computation definition
+ * @returns A complete Computation implementation
  */
-export const computation: Computation = {
-  name: 'computation',
-  
-  evolve<TInput = unknown, TOutput = unknown>(
-    input: Experience<TInput>
-  ): Experience<TOutput> {
-    log.debug('Computing transformation', { 
-      value: input.value,
-      source: input.source 
-    })
+export function defineComputation(options: {
+  name: string
+  elaborate: (previous?: Elaboration) => Elaboration
+}): Computation {
+  return {
+    name: options.name,
+    type: 'process',
     
-    // TODO: Implement deterministic computation logic
-    // For now, transform the experience
-    const output: Experience<TOutput> = {
-      value: input.value as unknown as TOutput,
-      source: 'computation',
-      context: {
-        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
-        previousSource: input.source,
-        timestamp: Date.now()
+    elaborate: options.elaborate,
+    
+    evolve(input: Experience): Experience {
+      log.debug(`Processing ${options.name}`, { 
+        source: input.source,
+        hasElaboration: !!input.elaboration 
+      })
+      
+      // Create new elaboration based on previous
+      const elaboration = options.elaborate(input.elaboration)
+      
+      // Return updated Experience (no new node created)
+      return {
+        ...input,
+        elaboration
       }
     }
-    
-    log.debug('Computed output', { 
-      value: output.value,
-      source: output.source 
-    })
-    return output
   }
 }

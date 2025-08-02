@@ -1,8 +1,5 @@
-import { Computation } from '../substrate/Computation.js'
-import { Experience } from '../Experience.js'
-import { getLogger } from '@monogent/logger'
-
-const log = getLogger('consolidation')
+import { Computation, defineComputation } from '../substrate/Computation.js'
+import { Elaboration } from '../substrate/Elaboration.js'
 
 /**
  * Consolidation Process Interface
@@ -37,42 +34,21 @@ export interface Consolidation extends Computation {
 
 /**
  * Default consolidation implementation
+ * Stores experiences into long-term memory
  */
-export const consolidation: Consolidation = {
+export const consolidation: Consolidation = defineComputation({
   name: 'consolidation',
-  type: 'process',
   
-  evolve<TInput = unknown, TOutput = unknown>(
-    input: Experience<TInput>
-  ): Experience<TOutput> {
-    log.debug('Consolidating experience into memory', { 
-      value: input.value,
-      source: input.source 
-    })
-    
-    // TODO: Implement memory graph integration
-    // Requires: memory graph access, LTP calculations
-    const output: Experience<TOutput> = {
-      value: input.value as unknown as TOutput,
+  elaborate(previous?: Elaboration): Elaboration {
+    return {
+      prompt: `记忆巩固处理：
+    1. 评估体验的重要性和新颖性
+    2. 识别与现有记忆的关联
+    3. 确定存储策略和强度
+    4. 构建记忆索引和连接
+    请描述如何将此体验整合到长期记忆中。`,
       source: 'consolidation',
-      context: {
-        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
-        previousSource: input.source,
-        consolidationStatus: 'pending',
-        graphUpdates: [],
-        understanding: {
-          situation: 'Experience consolidated',
-          confidence: 0.0
-        },
-        timestamp: Date.now()
-      }
+      previous
     }
-    
-    log.debug('Experience consolidated into memory (pending implementation)', { 
-      value: output.value,
-      source: output.source 
-    })
-    
-    return output
   }
-}
+})

@@ -1,5 +1,6 @@
 import { Generation } from '../substrate/Generation.js'
 import { Experience } from '../Experience.js'
+import { Elaboration } from '../substrate/Elaboration.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('pattern-recognition')
@@ -42,17 +43,53 @@ export const patternRecognition: PatternRecognition = {
       source: input.source 
     })
     
-    // In LLM context, pattern is already linguistic
-    // This step confirms perceptual coherence
+    // Get previous elaborations from context
+    const previousElaborations = (input.context as any)?.elaborations || []
+    const previousElaboration = previousElaborations[previousElaborations.length - 1]
+    
+    // Create elaboration for pattern recognition
+    const elaboration: Elaboration = {
+      prompt: `基于检测到的特征，识别整体模式：
+    1. 组合特征形成完整模式
+    2. 识别模式类型和含义
+    3. 建立模式间的关联
+    请给出完整的模式理解。`,
+      schema: {
+        type: 'object',
+        properties: {
+          patterns: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                name: { type: 'string' },
+                type: { type: 'string' },
+                description: { type: 'string' },
+                components: {
+                  type: 'array',
+                  items: { type: 'string' }
+                },
+                confidence: { type: 'number' }
+              }
+            }
+          },
+          overallMeaning: { type: 'string' },
+          innerLanguageForm: { type: 'string' }
+        }
+      },
+      source: 'pattern-recognition',
+      previous: previousElaboration
+    }
+    
+    // For now, just add elaboration - actual LLM call happens at Function level
     const output: Experience<TOutput> = {
       value: input.value as unknown as TOutput,
       source: 'pattern-recognition',
       context: {
         ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
         previousSource: input.source,
-        perceptualPattern: 'complete',
-        description: 'Inner language form of perceptual experience',
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        elaborations: [...previousElaborations, elaboration]
       }
     }
     

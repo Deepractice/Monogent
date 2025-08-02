@@ -1,39 +1,68 @@
+import { Elaboration } from './substrate/Elaboration.js'
+import { Interpretation } from './substrate/Interpretation.js'
+
 /**
- * Experience Type - The fundamental unit of cognitive processing
+ * Experience Interface - The Unified Moment of Cognition
  * 
- * Experience represents a complete moment of cognition.
- * This is a pure type representing the data structure.
+ * Experience represents a complete cognitive moment, containing both
+ * the process of questioning (Elaboration) and the result of understanding
+ * (Interpretation). It forms a linked list preserving cognitive history.
  * 
  * Theoretical Foundation:
- * - Stream of Consciousness (James, 1890)
- * - Actual Occasions (Whitehead, 1929)
- * - Memory Systems: What, How, Where/When (Tulving, 1985)
+ * - Kant's Transcendental Unity: The synthesis of sensibility and understanding
+ *   (Kant, 1781, "Critique of Pure Reason")
+ * - Stream of Consciousness: Each moment contains past, present, and future
+ *   (James, 1890, "Principles of Psychology")
+ * - Whitehead's Actual Occasions: Moments of experience as fundamental units
+ *   (Whitehead, 1929, "Process and Reality")
  * 
  * Design Philosophy:
- * - Each cognitive process produces a new Experience
- * - Experiences form a linked list, preserving cognitive history
- * - The chain allows tracing back through the entire cognitive journey
+ * - No abstract "value" - only concrete cognitive products
+ * - Elaboration captures the "how" of cognition (process)
+ * - Interpretation captures the "what" of cognition (result)
+ * - The chain preserves the "when" of cognition (history)
+ * 
+ * Kantian Mapping:
+ * - Elaboration = Materials from sensibility (Anschauung)
+ * - Interpretation = Concepts from understanding (Begriff)
+ * - Experience = Unity of intuition and concept (Erkenntnis)
  */
-export interface Experience<T> {
+export interface Experience {
   /**
-   * The content of this experience (What)
+   * The elaborative process that led to this experience
+   * Contains the accumulated questions/prompts from all processes
+   * This is the "sensible material" in Kantian terms
    */
-  readonly value: T
+  readonly elaboration?: Elaboration
   
   /**
-   * Optional metadata about how this experience was created (How)
+   * The interpretive result of this experience
+   * Contains the semantic understanding from LLM
+   * This is the "conceptual synthesis" in Kantian terms
+   */
+  readonly interpretation?: Interpretation
+  
+  /**
+   * The source that created this experience
+   * Typically the name of the Function that produced it
    */
   readonly source?: string
   
   /**
-   * Optional context of this experience (Where/When)
+   * Link to the previous experience in the cognitive chain
+   * Forms a linked list of the entire cognitive journey
+   * Enables tracing back through cognitive history
    */
-  readonly context?: unknown
+  readonly previous?: Experience
   
   /**
-   * Link to the previous experience in the cognitive chain
-   * This creates a linked list of the entire cognitive journey
+   * Optional metadata about this experience
+   * Can include timing, confidence, alternatives, etc.
    */
-  readonly previous?: Experience<any>
+  readonly metadata?: {
+    timestamp?: number
+    duration?: number
+    confidence?: number
+    [key: string]: any
+  }
 }
-

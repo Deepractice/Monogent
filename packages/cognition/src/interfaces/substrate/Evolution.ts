@@ -49,13 +49,10 @@ export interface Evolution {
    * The fundamental operation: evolve Experience from one form to another
    * 
    * This signature enforces that all cognitive transformations operate on Experience.
-   * The specific data types within Experience are not architectural concerns,
-   * allowing maximum flexibility in implementation while maintaining conceptual unity.
+   * Process evolutions contribute Elaborations, Function evolutions create new Experiences.
    * 
-   * @param input The current Experience containing some cognitive content
-   * @returns The evolved Experience with transformed content
+   * @param input The current Experience 
+   * @returns The evolved Experience
    */
-  evolve<TInput = unknown, TOutput = unknown>(
-    input: Experience<TInput>
-  ): Experience<TOutput> | Promise<Experience<TOutput>>
+  evolve(input: Experience): Experience | Promise<Experience>
 }

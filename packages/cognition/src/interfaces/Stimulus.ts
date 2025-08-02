@@ -1,7 +1,7 @@
 /**
- * Stimulus Interface - The Origin of Experience
+ * Stimulus Type - The Origin of Experience
  * 
- * A marker interface representing anything that can trigger sensation.
+ * Represents any external input that can trigger cognitive processing.
  * The boundary between the external world and the cognitive system.
  * 
  * Theoretical Foundation:
@@ -13,9 +13,7 @@
  * Design Philosophy:
  * - Stimulus is whatever the external world presents
  * - No constraints on structure - could be anything
- * - The cognitive system decides how to interpret it
- * - Empty interface allows any type to be a stimulus
+ * - Converted to Experience by ExperientialEncoding
+ * - Type alias allows any value to be a stimulus
  */
-export interface Stimulus {
-  // Intentionally empty - any object can be a stimulus
-}
+export type Stimulus = unknown

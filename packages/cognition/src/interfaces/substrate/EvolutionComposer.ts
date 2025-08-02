@@ -1,5 +1,6 @@
 import { Evolution } from './Evolution.js'
 import { Experience } from '../Experience.js'
+import { Elaboration } from './Elaboration.js'
 
 /**
  * EvolutionComposer Interface
@@ -19,72 +20,57 @@ export interface EvolutionComposer {
 
 /**
  * Compose processes (micro-evolution)
- * Transforms value without creating new Experience nodes
+ * 
+ * Key behaviors:
+ * - Accumulates Elaborations in the chain
+ * - Preserves the original Experience (no new node)
+ * - Passes accumulated context through the pipeline
+ * 
+ * This models Kant's sensibility - gathering materials for understanding
  */
-function composeProcesses(processes: Evolution[]): Evolution {
+export function composeProcesses(...processes: Evolution[]): Evolution {
   return {
-    name: `composed-processes(${processes.map(p => p.name).join(',')})`,
+    name: `processes(${processes.map(p => p.name).join('→')})`,
     type: 'process',
     
-    async evolve<TInput, TOutput>(input: Experience<TInput>): Promise<Experience<TOutput>> {
-      // Start with the input value
-      let currentValue: unknown = input.value
-      const processMetadata: Record<string, unknown> = {}
+    async evolve(input: Experience): Promise<Experience> {
+      let current = input
       
-      // Run each process in sequence
+      // Run each process in sequence, accumulating elaborations
       for (const process of processes) {
-        // Create temporary experience with current value
-        const tempExperience: Experience<unknown> = {
-          value: currentValue,
-          source: input.source,
-          context: input.context,
-          previous: input.previous
-        }
-        
-        // Run the process
-        const result = await process.evolve(tempExperience)
-        
-        // Extract the transformed value
-        currentValue = result.value
-        
-        // Collect process metadata
-        if (result.context && typeof result.context === 'object') {
-          processMetadata[process.name] = result.context
-        }
+        current = await process.evolve(current)
       }
       
-      // Return the original Experience with transformed value
-      // This preserves the Experience chain - no new node created
-      return {
-        value: currentValue as TOutput,
-        source: input.source,
-        context: {
-          ...(typeof input.context === 'object' ? input.context : {}),
-          processMetadata
-        },
-        previous: input.previous
-      }
+      // Return the final Experience with accumulated elaboration
+      // No new Experience node - preserves the chain
+      return current
     }
   }
 }
 
 /**
  * Compose functions (macro-evolution)
- * Each function creates a new Experience node
+ * 
+ * Key behaviors:
+ * - Each function creates a new Experience node
+ * - Chains Experiences via previous pointer
+ * - Each represents a cognitive milestone
+ * 
+ * This models Kant's understanding - forming concepts from materials
  */
-function composeFunctions(functions: Evolution[]): Evolution {
+export function composeFunctions(...functions: Evolution[]): Evolution {
   return {
-    name: `composed-functions(${functions.map(f => f.name).join('->')})`,
+    name: `functions(${functions.map(f => f.name).join('→')})`,
     type: 'path',
     
-    async evolve<TInput, TOutput>(input: Experience<TInput>): Promise<Experience<TOutput>> {
-      let current: Experience<unknown> = input
+    async evolve(input: Experience): Promise<Experience> {
+      let current: Experience = input
       
       // Each function creates a new Experience node
       for (const func of functions) {
         const next = await func.evolve(current)
         
-        // Ensure proper chaining
+        // Ensure proper Experience chaining
         if (!next.previous) {
           current = {
             ...next,
@@ -95,7 +81,7 @@ function composeFunctions(functions: Evolution[]): Evolution {
         }
       }
       
-      return current as Experience<TOutput>
+      return current
     }
   }
 }
@@ -104,8 +90,8 @@ function composeFunctions(functions: Evolution[]): Evolution {
  * Default EvolutionComposer implementation
  * 
  * Automatically selects composition strategy based on Evolution type:
- * - 'process': Micro-evolution (transforms value without creating new Experience)
- * - 'function': Macro-evolution (creates new Experience with chaining)
+ * - 'process': Uses composeProcesses (accumulates Elaborations)
+ * - 'function': Uses composeFunctions (chains Experiences)
  * - 'path': Same as function (chains multiple functions)
  * 
  * Enforces type consistency - all composed evolutions must have the same type.
@@ -131,21 +117,22 @@ export const defaultComposer: EvolutionComposer = {
     // Delegate to appropriate composition strategy
     switch (baseType) {
       case 'process':
-        return composeProcesses(evolutions)
+        return composeProcesses(...evolutions)
       
       case 'function':
       case 'path':
-        return composeFunctions(evolutions)
+        return composeFunctions(...evolutions)
       
       default:
         // Treat unknown types as functions for backward compatibility
-        return composeFunctions(evolutions)
+        return composeFunctions(...evolutions)
     }
   }
 }
 
 /**
  * Convenience function using the default composer
+ * @deprecated Use composeProcesses or composeFunctions directly for clarity
  */
 export function compose(...evolutions: Evolution[]): Evolution {
   return defaultComposer.compose(...evolutions)

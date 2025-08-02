@@ -1,5 +1,6 @@
 import { Generation } from '../substrate/Generation.js'
 import { Experience } from '../Experience.js'
+import { Elaboration } from '../substrate/Elaboration.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('feature-detection')
@@ -42,16 +43,57 @@ export const featureDetection: FeatureDetection = {
       source: input.source 
     })
     
-    // In LLM context, features are implicit in embeddings
-    // TODO: Could extract explicit features if needed
+    // Get previous elaborations from context
+    const previousElaborations = (input.context as any)?.elaborations || []
+    const previousElaboration = previousElaborations[previousElaborations.length - 1]
+    
+    // Create elaboration for feature detection
+    const elaboration: Elaboration = {
+      prompt: `对筛选后的内容进行特征检测：
+    1. 提取关键特征和模式
+    2. 识别语义标记和结构
+    3. 分析特征之间的关系
+    请详细描述检测到的特征。`,
+      schema: {
+        type: 'object',
+        properties: {
+          features: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                type: { type: 'string' },
+                value: { type: 'string' },
+                confidence: { type: 'number' }
+              }
+            }
+          },
+          relationships: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                from: { type: 'string' },
+                to: { type: 'string' },
+                relation: { type: 'string' }
+              }
+            }
+          }
+        }
+      },
+      source: 'feature-detection',
+      previous: previousElaboration
+    }
+    
+    // For now, just add elaboration - actual LLM call happens at Function level
     const output: Experience<TOutput> = {
       value: input.value as unknown as TOutput,
       source: 'feature-detection',
       context: {
         ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
         previousSource: input.source,
-        featureStatus: 'implicit-in-embeddings',
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        elaborations: [...previousElaborations, elaboration]
       }
     }
     
