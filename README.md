@@ -1,6 +1,10 @@
-# Monogent
-
-A cognitive architecture system that models human cognition through composable cognitive functions and processes, inspired by cognitive psychology and neuroscience.
+<div align="center">
+  <img src="assets/logo.png" alt="Monogent Logo" width="200">
+  
+  # Monogent
+  
+  A cognitive architecture system that models human cognition through composable cognitive functions and processes, inspired by cognitive psychology and neuroscience.
+</div>
 
 ## Overview
 
