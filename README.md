@@ -175,16 +175,13 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 MIT © Deepractice
 
-## References
+## Recommended Reading
 
-The architecture is grounded in established cognitive science:
+To understand the theoretical foundations and design philosophy behind Monogent, we recommend reading our article series:
 
-- Marr, D. (1982). Vision: A Computational Investigation
-- Fodor, J. A. (1983). The Modularity of Mind
-- Newell, A. (1990). Unified Theories of Cognition
-- Kahneman, D. (2011). Thinking, Fast and Slow
-
-For more details, see the theoretical foundations in each module.
+1. [**RAG is Not All You Need**](docs/articles/en/1-RAG-not-all-en.md) - Why traditional RAG falls short and the need for true cognitive systems
+2. [**Why Can't Semantics Be Computed?**](docs/articles/en/2-Why-cant-semantics-be-computed-en.md) - The five dimensions of semantic computability
+3. [**Learning from Human Cognition**](docs/articles/en/3-Learning-from-human-cognition-en.md) - How cognitive psychology informs our architecture
 
 ---
 
