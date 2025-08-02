@@ -1,85 +1,187 @@
-# Monogent - AI个体认知系统
+# Monogent
 
-基于认知心理学的AI记忆架构，构建真正的个体认知系统。
+A cognitive architecture system that models human cognition through composable cognitive functions and processes, inspired by cognitive psychology and neuroscience.
 
-## 🧠 核心理念
+## Overview
 
-Monogent 不是传统的 RAG 系统，而是模拟人类认知过程的个体认知系统。每个 Monogent 都是一个独立的认知个体，具有：
+Monogent implements a biologically-inspired cognitive architecture that simulates how the human mind processes information - from raw sensory input to deep understanding. The system is built on the principle that cognition emerges from the composition of simpler cognitive operations, mirroring the modular organization of the human brain.
 
-- **神经架构设计**：基于认知心理学的神经节点模型
-- **语义计算能力**：五维度语义（时间、空间、因果、情感、社会）的完整计算
-- **分布式记忆网络**：去中心化的认知记忆系统
-- **个体认知边界**：每个个体有明确的认知能力边界和扩展机制
+## Core Concepts
 
-## 🚀 快速开始
+### Experience Chain
+Every cognitive operation produces an `Experience` - a moment of cognition that links to previous experiences, forming a chain of cognitive history. This allows the system to trace how understanding develops through successive transformations.
 
-### 环境要求
+```typescript
+interface Experience<T> {
+  value: T                      // The cognitive content
+  source?: string              // How this experience was created
+  context?: unknown            // Additional metadata
+  previous?: Experience<any>   // Link to previous experience
+}
+```
 
-- Node.js >= 20.0.0
-- pnpm >= 8.15.0
+### Evolution System
+Cognitive transformations are modeled as `Evolution` - the process by which one experience evolves into another. We distinguish between:
 
-### 安装依赖
+- **Micro-evolution (Process level)**: Small transformations within a cognitive stage
+- **Macro-evolution (Function level)**: Major transitions that produce new experiences
+- **Path-evolution**: Complete cognitive journeys from input to understanding
+
+### Substrate Architecture
+Two fundamental substrates power all cognitive operations:
+
+- **Computation Substrate**: Handles deterministic, algorithmic transformations (like pattern matching)
+- **Generation Substrate**: Handles creative, probabilistic operations (like language understanding)
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                        Cognition System                       │
+├─────────────────────────────────────────────────────────────┤
+│                           Paths                               │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │ understand: sensation → perception → comprehension → │    │
+│  │            familiarity → recollection → consolidation│    │
+│  └─────────────────────────────────────────────────────┘    │
+├─────────────────────────────────────────────────────────────┤
+│                         Functions                             │
+│  ┌──────────┐ ┌───────────┐ ┌──────────────┐ ┌──────────┐  │
+│  │Sensation │ │Perception │ │Comprehension │ │Familiarity│  │
+│  └──────────┘ └───────────┘ └──────────────┘ └──────────┘  │
+├─────────────────────────────────────────────────────────────┤
+│                         Processes                             │
+│  ┌────────────┐ ┌─────────────┐ ┌───────────────┐          │
+│  │Transduction│ │FeatureDetect│ │SemanticEncode │ ...      │
+│  └────────────┘ └─────────────┘ └───────────────┘          │
+├─────────────────────────────────────────────────────────────┤
+│                         Substrates                            │
+│  ┌─────────────────────┐    ┌─────────────────────┐         │
+│  │    Computation      │    │    Generation       │         │
+│  └─────────────────────┘    └─────────────────────┘         │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Current Progress
+
+### ✅ Completed
+- **Core Interfaces**: Experience, Evolution, Substrate system
+- **Architecture Design**: Micro/macro evolution distinction
+- **Composition System**: Smart EvolutionComposer with type-based strategies
+- **Basic Processes**: Transduction, SensoryGating, ExperientialEncoding
+- **All Functions**: Defined with proper theoretical foundations
+- **Understand Path**: Complete cognitive pipeline from sensation to consolidation
+
+### 🚧 In Progress
+- **Generation Processes**: Implementing LLM-based cognitive operations
+- **Computation Processes**: Building deterministic transformations
+- **Memory System**: Hippocampus integration for memory storage/retrieval
+
+### 📋 Planned
+- **Additional Paths**: think, learn, create, decide
+- **Cognitive Tests**: Replicating classic cognitive psychology experiments
+- **Performance Optimization**: Batching LLM calls, caching strategies
+- **Real-world Applications**: Practical use cases and demos
+
+## When Complete
+
+Monogent will be a fully functional cognitive system capable of:
+
+1. **Understanding**: Processing input through multiple cognitive stages to achieve deep comprehension
+2. **Learning**: Forming new memories and integrating them with existing knowledge
+3. **Thinking**: Internal reasoning without external input
+4. **Creating**: Generating novel ideas through cognitive recombination
+5. **Deciding**: Making choices based on cognitive evaluation
+
+The system will serve as:
+- A research platform for cognitive science
+- A practical framework for building cognitive applications
+- A bridge between symbolic AI and neural approaches
+- A testbed for theories of mind and consciousness
+
+## Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/Deepractice/Monogent.git
+
+# Install dependencies
 pnpm install
-```
 
-### 开发模式
-
-```bash
-pnpm dev
-```
-
-### 构建项目
-
-```bash
+# Build the project
 pnpm build
 ```
 
-### 运行测试
+## Usage
 
-```bash
-pnpm test
+```typescript
+import { understand } from '@monogent/cognition'
+import { experientialEncoding } from '@monogent/cognition/processes'
+
+// Encode raw input into an Experience
+const input = experientialEncoding.evolve("The cat sat on the mat")
+
+// Process through the understand path
+const understanding = await understand.evolve(input)
+
+// Trace the cognitive journey
+let current = understanding
+while (current) {
+  console.log(`${current.source}: ${current.value}`)
+  current = current.previous
+}
 ```
 
-## 📦 项目结构
+## Project Structure
 
 ```
 Monogent/
-├── packages/          # 核心包目录
-│   ├── core/         # 核心认知引擎
-│   ├── memory/       # 记忆系统
-│   ├── semantic/     # 语义计算引擎
-│   └── utils/        # 工具函数
-├── apps/             # 应用目录
-├── docs/             # 文档
-└── scripts/          # 脚本工具
+├── packages/              # Core packages
+│   ├── cognition/        # Cognitive architecture
+│   │   ├── src/
+│   │   │   ├── interfaces/      # Core interfaces
+│   │   │   │   ├── substrate/   # Computation & Generation
+│   │   │   │   ├── processes/   # Cognitive processes
+│   │   │   │   ├── functions/   # Cognitive functions
+│   │   │   │   └── paths/       # Cognitive paths
+│   │   │   └── scripts/         # Test scripts
+│   │   └── examples/            # Usage examples
+│   ├── hippocampus/      # Memory system
+│   ├── cortex/           # LLM integration
+│   └── logger/           # Logging utilities
+├── apps/                 # Applications
+├── docs/                 # Documentation
+└── scripts/              # Build scripts
 ```
 
-## 🧪 测试策略
+## Technical Stack
 
-采用混合式测试文件组织：
-- 单元测试与源代码就近放置（`*.test.ts`）
-- 集成测试集中在 `__tests__/integration/`
-- E2E 测试集中在 `__tests__/e2e/`
+- **Runtime**: Node.js 20+
+- **Language**: TypeScript 5.3+
+- **Package Manager**: pnpm workspace
+- **Build System**: Turbo + tsup
+- **Testing**: Vitest
+- **Code Quality**: ESLint 9 + Prettier
 
-## 🛠️ 技术栈
+## Contributing
 
-- **运行时**: Node.js 20+
-- **语言**: TypeScript 5.3+
-- **包管理**: pnpm workspace
-- **构建**: Turbo + tsup
-- **测试**: Vitest
-- **代码规范**: ESLint 9 + Prettier
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
-## 📄 许可证
+## License
 
-MIT License
+MIT © Deepractice
 
-## 🤝 贡献
+## References
 
-欢迎提交 Issue 和 Pull Request！
+The architecture is grounded in established cognitive science:
+
+- Marr, D. (1982). Vision: A Computational Investigation
+- Fodor, J. A. (1983). The Modularity of Mind
+- Newell, A. (1990). Unified Theories of Cognition
+- Kahneman, D. (2011). Thinking, Fast and Slow
+
+For more details, see the theoretical foundations in each module.
 
 ---
 
-> "个体认知系统优于RAG，语义的五维度可计算性是关键。" - Sean
+> "Individual cognitive systems surpass RAG. The key is the five-dimensional computability of semantics." - Sean
