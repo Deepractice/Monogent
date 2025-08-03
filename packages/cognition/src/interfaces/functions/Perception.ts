@@ -1,5 +1,4 @@
-import { Generation } from '../substrate/Generation.js'
-import { compose } from '../substrate/EvolutionComposer.js'
+import { Generation, defineGeneration } from '../substrate/Generation.js'
 import { sensation } from '../processes/Sensation.js'
 import { sensoryGating } from '../processes/SensoryGating.js'
 import { featureDetection } from '../processes/FeatureDetection.js'
@@ -31,16 +30,20 @@ export interface Perception extends Generation {
 }
 
 /**
- * Default perception implementation using process composition
+ * Default perception implementation using defineGeneration
+ * 
+ * Runs four processes to build up perceptual understanding:
+ * - Sensation: Initial contact with stimuli
+ * - SensoryGating: Attention filtering
+ * - FeatureDetection: Extract meaningful features
+ * - PatternRecognition: Form coherent perceptual gestalts
  */
-export const perception: Perception = {
+export const perception: Perception = defineGeneration({
   name: 'perception',
-  type: 'function',
-  
-  evolve: compose(
+  processes: [
     sensation,
     sensoryGating,
     featureDetection,
     patternRecognition
-  ).evolve
-}
+  ]
+})

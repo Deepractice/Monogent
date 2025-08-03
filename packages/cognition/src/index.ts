@@ -8,6 +8,7 @@
 // Core interfaces
 export type { Stimulus } from './interfaces/Stimulus.js'
 export type { Experience } from './interfaces/Experience.js'
+export type { Synthesis } from './interfaces/Synthesis.js'
 export type { Cognition } from './interfaces/Cognition.js'
 export { cognition } from './interfaces/Cognition.js'
 
@@ -16,6 +17,7 @@ export type { Evolution } from './interfaces/substrate/Evolution.js'
 export type { Computation } from './interfaces/substrate/Computation.js'
 export { defineComputation } from './interfaces/substrate/Computation.js'
 export type { Generation } from './interfaces/substrate/Generation.js'
+export { defineGeneration } from './interfaces/substrate/Generation.js'
 export type { Elaboration } from './interfaces/substrate/Elaboration.js'
 export type { Interpretation } from './interfaces/substrate/Interpretation.js'
 export type { EvolutionComposer } from './interfaces/substrate/EvolutionComposer.js'

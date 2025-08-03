@@ -1,4 +1,4 @@
-import { Generation } from '../substrate/Generation.js'
+import { Generation, defineGeneration } from '../substrate/Generation.js'
 import { episodicRetrieval } from '../processes/EpisodicRetrieval.js'
 
 /**
@@ -28,12 +28,14 @@ export interface Recollection extends Generation {
 }
 
 /**
- * Default recollection implementation
- * Single process - no composition needed
+ * Default recollection implementation using defineGeneration
+ * 
+ * Single process that reconstructs episodic memories:
+ * - EpisodicRetrieval: Reconstruct complete memories from fragments
  */
-export const recollection: Recollection = {
+export const recollection: Recollection = defineGeneration({
   name: 'recollection',
-  type: 'function',
-  
-  evolve: episodicRetrieval.evolve
-}
+  processes: [
+    episodicRetrieval
+  ]
+})

@@ -1,5 +1,4 @@
-import { Generation } from '../substrate/Generation.js'
-import { compose } from '../substrate/EvolutionComposer.js'
+import { Generation, defineGeneration } from '../substrate/Generation.js'
 import { semanticEncoding } from '../processes/SemanticEncoding.js'
 import { categorization } from '../processes/Categorization.js'
 import { abstraction } from '../processes/Abstraction.js'
@@ -29,15 +28,18 @@ export interface Comprehension extends Generation {
 }
 
 /**
- * Default comprehension implementation using process composition
+ * Default comprehension implementation using defineGeneration
+ * 
+ * Transforms perceptual meaning into semantic structure:
+ * - SemanticEncoding: Create AMR representation
+ * - Categorization: Assign ontological categories
+ * - Abstraction: Extract generalizable patterns
  */
-export const comprehension: Comprehension = {
+export const comprehension: Comprehension = defineGeneration({
   name: 'comprehension',
-  type: 'function',
-  
-  evolve: compose(
+  processes: [
     semanticEncoding,
     categorization,
     abstraction
-  ).evolve
-}
+  ]
+})

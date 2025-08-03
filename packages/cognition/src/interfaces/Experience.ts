@@ -1,5 +1,6 @@
 import { Elaboration } from './substrate/Elaboration.js'
 import { Interpretation } from './substrate/Interpretation.js'
+import { Synthesis } from './Synthesis.js'
 
 /**
  * Experience Interface - The Unified Moment of Cognition
@@ -54,6 +55,13 @@ export interface Experience {
    * Enables tracing back through cognitive history
    */
   readonly previous?: Experience
+  
+  /**
+   * Optional synthesis configuration for LLM interaction
+   * Carries the interpretation strategy through the cognitive chain
+   * Can be inherited from previous experiences if not specified
+   */
+  readonly synthesis?: Synthesis
   
   /**
    * Optional metadata about this experience

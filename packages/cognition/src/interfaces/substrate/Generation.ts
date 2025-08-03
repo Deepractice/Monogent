@@ -1,5 +1,9 @@
 import { Evolution } from './Evolution.js'
 import { Experience } from '../Experience.js'
+import { Elaboration } from './Elaboration.js'
+import { Interpretation } from './Interpretation.js'
+import { Computation } from './Computation.js'
+import { Synthesis } from '../Synthesis.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('generation')
@@ -35,42 +39,78 @@ const log = getLogger('generation')
  * - Language production, creative problem solving, hypothesis formation
  */
 export interface Generation extends Evolution {
-  // Inherits evolve from Evolution
-  // Generation typically returns Promise for async LLM operations
-  // Transforms Experience<TInput> → Experience<TOutput> creatively
+  /**
+   * Create a new experience based on previous experience
+   * This is the core method that functions implement
+   * 
+   * @param previous The previous experience in the chain
+   * @returns A new Experience with elaboration (no interpretation yet)
+   */
+  experience(previous: Experience): Experience
 }
 
 /**
- * Default generation implementation
- * Provides basic generative transformation as a starting point
+ * Factory function to define a Generation function
+ * Similar to defineComputation, provides a clean API for creating functions
+ * 
+ * @param options The generation definition
+ * @returns A complete Generation implementation
  */
-export const generation: Generation = {
-  name: 'generation',
-  
-  async evolve<TInput = unknown, TOutput = unknown>(
-    input: Experience<TInput>
-  ): Promise<Experience<TOutput>> {
-    log.debug('Processing input', { 
-      value: input.value,
-      source: input.source 
-    })
+export function defineGeneration(options: {
+  name: string
+  processes: Computation[]
+}): Generation {
+  return {
+    name: options.name,
+    type: 'function',
     
-    // TODO: Implement generative/semantic processing logic
-    // For now, transform the experience
-    const output: Experience<TOutput> = {
-      value: input.value as unknown as TOutput,
-      source: 'generation',
-      context: {
-        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
-        previousSource: input.source,
-        timestamp: Date.now()
+    experience(previous: Experience): Experience {
+      log.debug(`Creating experience for ${options.name}`, {
+        source: previous.source,
+        hasElaboration: !!previous.elaboration
+      })
+      
+      let accumulated = previous
+      
+      // Run all processes to accumulate elaborations
+      for (const process of options.processes) {
+        accumulated = process.evolve(accumulated)
+      }
+      
+      // Create new Experience node
+      return {
+        elaboration: accumulated.elaboration,
+        source: options.name,
+        previous: previous,
+        metadata: {
+          timestamp: Date.now(),
+          processes: options.processes.map(p => p.name)
+        }
+      }
+    },
+    
+    async evolve(previous: Experience): Promise<Experience> {
+      // Create new experience with elaboration
+      const newExperience = this.experience(previous)
+      
+      // Get synthesis configuration
+      const synthesis = newExperience.synthesis || previous.synthesis
+      if (!synthesis) {
+        throw new Error(`No synthesis configuration found for ${this.name}`)
+      }
+      
+      log.debug(`Calling synthesis for ${this.name}`, {
+        hasElaboration: !!newExperience.elaboration
+      })
+      
+      // Call LLM through synthesis
+      const interpretation = await synthesis.interpret(newExperience)
+      
+      // Return complete Experience
+      return {
+        ...newExperience,
+        interpretation
       }
     }
-    
-    log.debug('Generated output', { 
-      value: output.value,
-      source: output.source 
-    })
-    return output
   }
 }
