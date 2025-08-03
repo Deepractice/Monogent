@@ -27,12 +27,10 @@ export { compose as composeFunc, composeAsync, pipe, pipeAsync } from './interfa
 // Cognitive functions
 export type { Perception } from './interfaces/functions/Perception.js'
 export type { Comprehension } from './interfaces/functions/Comprehension.js'
-export type { Familiarity } from './interfaces/functions/Familiarity.js'
 export type { Recollection } from './interfaces/functions/Recollection.js'
 
 export { perception } from './interfaces/functions/Perception.js'
 export { comprehension } from './interfaces/functions/Comprehension.js'
-export { familiarity } from './interfaces/functions/Familiarity.js'
 export { recollection } from './interfaces/functions/Recollection.js'
 
 // Cognitive processes

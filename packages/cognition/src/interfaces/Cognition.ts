@@ -27,7 +27,7 @@ export interface Cognition {
    * 
    * The most complete cognitive path that integrates new information
    * with existing knowledge. Includes all cognitive functions:
-   * Sensation → Perception → Comprehension → Familiarity → Recollection → Consolidation
+   * Perception → Comprehension → SpreadingActivation → AssociativeBinding → Recollection → Consolidation
    * 
    * @returns The understand path evolution
    */
