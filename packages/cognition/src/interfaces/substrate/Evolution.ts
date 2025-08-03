@@ -1,4 +1,4 @@
-import { Experience } from '../Experience.js'
+import { Experience } from './Experience.js'
 
 /**
  * Evolution Interface - The Fundamental Abstraction

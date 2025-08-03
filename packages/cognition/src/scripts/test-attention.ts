@@ -1,5 +1,5 @@
 import { compose, sensation, attention, perception, representation } from '../index.js'
-import { Experience } from '../interfaces/Experience.js'
+import { Experience } from '../substrate/Experience.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('test-attention')

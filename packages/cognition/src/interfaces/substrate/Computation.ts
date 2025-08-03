@@ -1,5 +1,5 @@
 import { Evolution } from './Evolution.js'
-import { Experience } from '../Experience.js'
+import { Experience } from './Experience.js'
 import { Elaboration } from './Elaboration.js'
 import { JSONSchema7 } from 'json-schema'
 import { getLogger } from '@monogent/logger'

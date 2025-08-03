@@ -1,5 +1,5 @@
 import { compose, sensation, discrimination, perception, attention } from '../index.js'
-import { Experience } from '../interfaces/Experience.js'
+import { Experience } from '../substrate/Experience.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('test-discrimination')

@@ -1,5 +1,5 @@
-import { Elaboration } from './substrate/Elaboration.js'
-import { Interpretation } from './substrate/Interpretation.js'
+import { Elaboration } from './Elaboration.js'
+import { Interpretation } from './Interpretation.js'
 import { Synthesis } from './Synthesis.js'
 
 /**

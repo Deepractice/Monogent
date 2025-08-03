@@ -1,5 +1,5 @@
 import { Computation, defineComputation } from '../substrate/Computation.js'
-import { Experience } from '../Experience.js'
+import { Experience } from '../substrate/Experience.js'
 import { Elaboration } from '../substrate/Elaboration.js'
 
 /**

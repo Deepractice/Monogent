@@ -1,5 +1,5 @@
 import { Experience } from './Experience.js'
-import { Interpretation } from './substrate/Interpretation.js'
+import { Interpretation } from './Interpretation.js'
 
 /**
  * Synthesis Configuration Interface

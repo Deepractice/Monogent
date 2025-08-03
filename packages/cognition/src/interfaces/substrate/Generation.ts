@@ -1,9 +1,9 @@
 import { Evolution } from './Evolution.js'
-import { Experience } from '../Experience.js'
+import { Experience } from './Experience.js'
 import { Elaboration } from './Elaboration.js'
 import { Interpretation } from './Interpretation.js'
 import { Computation } from './Computation.js'
-import { Synthesis } from '../Synthesis.js'
+import { Synthesis } from './Synthesis.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('generation')
