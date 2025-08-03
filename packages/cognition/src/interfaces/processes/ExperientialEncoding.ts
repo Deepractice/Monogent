@@ -59,6 +59,7 @@ export const experientialEncoding: ExperientialEncoding = {
     }
     
     return {
+      stimulus,  // Include the original stimulus
       elaboration,
       source: 'experiential-encoding',
       metadata: {

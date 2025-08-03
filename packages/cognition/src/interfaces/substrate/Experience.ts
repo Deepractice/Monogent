@@ -1,6 +1,7 @@
 import { Elaboration } from './Elaboration.js'
 import { Interpretation } from './Interpretation.js'
 import { Synthesis } from './Synthesis.js'
+import { Stimulus } from './Stimulus.js'
 
 /**
  * Experience Interface - The Unified Moment of Cognition
@@ -18,17 +19,24 @@ import { Synthesis } from './Synthesis.js'
  *   (Whitehead, 1929, "Process and Reality")
  * 
  * Design Philosophy:
- * - No abstract "value" - only concrete cognitive products
+ * - Every Experience originates from a Stimulus (internal or external)
  * - Elaboration captures the "how" of cognition (process)
  * - Interpretation captures the "what" of cognition (result)
  * - The chain preserves the "when" of cognition (history)
  * 
  * Kantian Mapping:
+ * - Stimulus = The given (das Gegebene) - what triggers cognition
  * - Elaboration = Materials from sensibility (Anschauung)
  * - Interpretation = Concepts from understanding (Begriff)
  * - Experience = Unity of intuition and concept (Erkenntnis)
  */
 export interface Experience {
+  /**
+   * The stimulus that triggered this experience
+   * Can be external (user input, tool feedback) or internal (reflection, association)
+   * This is the "given" that sets cognition in motion
+   */
+  readonly stimulus?: Stimulus
   /**
    * The elaborative process that led to this experience
    * Contains the accumulated questions/prompts from all processes
