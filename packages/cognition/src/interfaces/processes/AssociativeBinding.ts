@@ -1,8 +1,5 @@
-import { Computation } from '../substrate/Computation.js'
-import { Experience } from '../Experience.js'
-import { getLogger } from '@monogent/logger'
-
-const log = getLogger('associative-binding')
+import { Computation, defineComputation } from '../substrate/Computation.js'
+import { Elaboration } from '../substrate/Elaboration.js'
 
 /**
  * Associative Binding Step Interface
@@ -30,37 +27,44 @@ export interface AssociativeBinding extends Computation {
 /**
  * Default associative binding implementation
  */
-export const associativeBinding: AssociativeBinding = {
+export const associativeBinding: AssociativeBinding = defineComputation({
   name: 'associative-binding',
-  type: 'process',
   
-  evolve<TInput = unknown, TOutput = unknown>(
-    input: Experience<TInput>
-  ): Experience<TOutput> {
-    log.debug('Binding current experience with memories', { 
-      value: input.value,
-      source: input.source 
-    })
+  prompt: (previous) => {
+    const context = previous ? 
+      `基于激活的记忆网络（${previous.source}），` : ''
     
-    // TODO: Implement graph matching algorithm
-    // Requires: parsed AMR, activated memory subgraphs
-    const output: Experience<TOutput> = {
-      value: input.value as unknown as TOutput,
-      source: 'associative-binding',
-      context: {
-        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
-        previousSource: input.source,
-        bindingStatus: 'pending',
-        mappings: [],
-        timestamp: Date.now()
+    return `${context}进行联想绑定：
+    1. 匹配当前AMR与记忆图结构
+    2. 识别共同的节点和关系
+    3. 计算结构相似度和绑定强度
+    4. 创建显式的节点映射
+    请建立当前体验与记忆的关联。`
+  },
+  
+  schema: () => ({
+    type: 'object',
+    properties: {
+      bindings: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            currentNode: { type: 'string' },
+            memoryNode: { type: 'string' },
+            bindingType: { type: 'string' },
+            strength: { type: 'number' }
+          }
+        }
+      },
+      mappings: {
+        type: 'object',
+        properties: {
+          structural: { type: 'number' },
+          semantic: { type: 'number' },
+          overall: { type: 'number' }
+        }
       }
     }
-    
-    log.debug('Bindings established (pending implementation)', { 
-      value: output.value,
-      source: output.source 
-    })
-    
-    return output
-  }
-}
+  })
+})

@@ -1,8 +1,5 @@
-import { Generation } from '../substrate/Generation.js'
-import { Experience } from '../Experience.js'
-import { getLogger } from '@monogent/logger'
-
-const log = getLogger('semantic-encoding')
+import { Computation, defineComputation } from '../substrate/Computation.js'
+import { Elaboration } from '../substrate/Elaboration.js'
 
 /**
  * Semantic Encoding Step Interface
@@ -19,49 +16,58 @@ const log = getLogger('semantic-encoding')
  *   (Banarescu et al., 2013)
  * 
  * Implementation Note:
- * - Generation substrate: LLM creates AMR from perceptual meaning
+ * - Computation substrate: prepares semantic encoding questions
  * - Critical transition: perception → semantics
- * - Output: AMR text (not yet parsed into graph)
+ * - Prepares prompts for AMR generation
  */
-export interface SemanticEncoding extends Generation {
-  // Inherits async evolve from Generation
+export interface SemanticEncoding extends Computation {
+  // Inherits evolve from Computation
 }
 
 /**
  * Default semantic encoding implementation
  */
-export const semanticEncoding: SemanticEncoding = {
+export const semanticEncoding: SemanticEncoding = defineComputation({
   name: 'semantic-encoding',
-  type: 'process',
   
-  async evolve<TInput = unknown, TOutput = unknown>(
-    input: Experience<TInput>
-  ): Promise<Experience<TOutput>> {
-    log.debug('Encoding perceptual meaning into semantic structure', { 
-      value: input.value,
-      source: input.source 
-    })
+  prompt: (previous) => {
+    const context = previous ? 
+      `基于识别到的模式（${previous.source}），` : ''
     
-    // TODO: Implement AMR generation via LLM
-    // For now, pass through with AMR placeholder
-    const output: Experience<TOutput> = {
-      value: input.value as unknown as TOutput,
-      source: 'semantic-encoding',
-      context: {
-        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
-        previousSource: input.source,
-        semanticFormat: 'amr-pending',
-        cognitiveStage: 'semantic-encoding',
-        description: 'Perceptual meaning transformed to semantic structure',
-        timestamp: Date.now()
-      }
+    return `${context}进行语义编码：
+    1. 提取核心语义结构
+    2. 构建概念关系图
+    3. 形成抽象语义表示(AMR)
+    4. 确保语义完整性和准确性
+    请将感知意义转化为语义结构。`
+  },
+  
+  schema: () => ({
+    type: 'object',
+    properties: {
+      concepts: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            id: { type: 'string' },
+            label: { type: 'string' },
+            type: { type: 'string' }
+          }
+        }
+      },
+      relations: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            source: { type: 'string' },
+            target: { type: 'string' },
+            relation: { type: 'string' }
+          }
+        }
+      },
+      amrText: { type: 'string' }
     }
-    
-    log.debug('Semantic structure encoded (AMR pending)', { 
-      value: output.value,
-      source: output.source 
-    })
-    
-    return output
-  }
-}
+  })
+})

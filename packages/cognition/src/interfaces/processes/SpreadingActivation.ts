@@ -1,8 +1,5 @@
-import { Computation } from '../substrate/Computation.js'
-import { Experience } from '../Experience.js'
-import { getLogger } from '@monogent/logger'
-
-const log = getLogger('spreading-activation')
+import { Computation, defineComputation } from '../substrate/Computation.js'
+import { Elaboration } from '../substrate/Elaboration.js'
 
 /**
  * Spreading Activation Step Interface
@@ -30,37 +27,54 @@ export interface SpreadingActivation extends Computation {
 /**
  * Default spreading activation implementation
  */
-export const spreadingActivation: SpreadingActivation = {
+export const spreadingActivation: SpreadingActivation = defineComputation({
   name: 'spreading-activation',
-  type: 'process',
   
-  evolve<TInput = unknown, TOutput = unknown>(
-    input: Experience<TInput>
-  ): Experience<TOutput> {
-    log.debug('Spreading activation through memory graph', { 
-      value: input.value,
-      source: input.source 
-    })
+  prompt: (previous) => {
+    const context = previous ? 
+      `基于抽象模式（${previous.source}），` : ''
     
-    // TODO: Implement graph-based activation spreading
-    // Requires: parsed AMR, memory graph access
-    const output: Experience<TOutput> = {
-      value: input.value as unknown as TOutput,
-      source: 'spreading-activation',
-      context: {
-        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
-        previousSource: input.source,
-        activationStatus: 'pending',
-        activatedExperiences: [],
-        timestamp: Date.now()
+    return `${context}进行激活扩散：
+    1. 从AMR内容识别激活源
+    2. 计算与记忆网络的连接强度
+    3. 按照能量扩散规则传播激活
+    4. 确定被激活的相关体验
+    请模拟记忆激活的扩散过程。`
+  },
+  
+  schema: () => ({
+    type: 'object',
+    properties: {
+      sources: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            node: { type: 'string' },
+            initialActivation: { type: 'number' }
+          }
+        }
+      },
+      activatedMemories: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            experienceId: { type: 'string' },
+            activationLevel: { type: 'number' },
+            distance: { type: 'number' },
+            pathway: { type: 'array', items: { type: 'string' } }
+          }
+        }
+      },
+      parameters: {
+        type: 'object',
+        properties: {
+          decayRate: { type: 'number' },
+          fanEffect: { type: 'boolean' },
+          threshold: { type: 'number' }
+        }
       }
     }
-    
-    log.debug('Activation spread complete (pending implementation)', { 
-      value: output.value,
-      source: output.source 
-    })
-    
-    return output
-  }
-}
+  })
+})

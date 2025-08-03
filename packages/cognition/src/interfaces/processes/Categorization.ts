@@ -1,8 +1,5 @@
-import { Generation } from '../substrate/Generation.js'
-import { Experience } from '../Experience.js'
-import { getLogger } from '@monogent/logger'
-
-const log = getLogger('categorization')
+import { Computation, defineComputation } from '../substrate/Computation.js'
+import { Elaboration } from '../substrate/Elaboration.js'
 
 /**
  * Categorization Step Interface
@@ -19,47 +16,55 @@ const log = getLogger('categorization')
  *   (Collins & Quillian, 1969)
  * 
  * Implementation Note:
- * - Generation substrate: LLM assigns semantic categories
- * - Enhances AMR with type annotations [ENTITY:animal:mammal]
- * - Provides foundation for reasoning and inference
+ * - Computation substrate: prepares categorization prompts
+ * - Plans AMR enhancement with type annotations [ENTITY:animal:mammal]
+ * - Sets up foundation for reasoning and inference
  */
-export interface Categorization extends Generation {
-  // Inherits async evolve from Generation
+export interface Categorization extends Computation {
+  // Inherits evolve from Computation
 }
 
 /**
  * Default categorization implementation
  */
-export const categorization: Categorization = {
+export const categorization: Categorization = defineComputation({
   name: 'categorization',
-  type: 'process',
   
-  async evolve<TInput = unknown, TOutput = unknown>(
-    input: Experience<TInput>
-  ): Promise<Experience<TOutput>> {
-    log.debug('Categorizing semantic concepts', { 
-      value: input.value,
-      source: input.source 
-    })
+  prompt: (previous) => {
+    const context = previous ? 
+      `基于语义结构（${previous.source}），` : ''
     
-    // TODO: Implement category assignment via LLM
-    const output: Experience<TOutput> = {
-      value: input.value as unknown as TOutput,
-      source: 'categorization',
-      context: {
-        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
-        previousSource: input.source,
-        categorizationStatus: 'pending',
-        cognitiveStage: 'categorization',
-        timestamp: Date.now()
+    return `${context}进行概念分类：
+    1. 为每个概念分配语义类别
+    2. 构建层级分类体系
+    3. 识别基本级类别和原型
+    4. 标注本体论关系
+    请为AMR中的概念添加类别标注。`
+  },
+  
+  schema: () => ({
+    type: 'object',
+    properties: {
+      categories: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            concept: { type: 'string' },
+            basicLevel: { type: 'string' },
+            superordinate: { type: 'string' },
+            subordinate: { type: 'array', items: { type: 'string' } },
+            prototype: { type: 'string' }
+          }
+        }
+      },
+      hierarchy: {
+        type: 'object',
+        properties: {
+          roots: { type: 'array', items: { type: 'string' } },
+          relations: { type: 'array', items: { type: 'object' } }
+        }
       }
     }
-    
-    log.debug('Categories assigned (pending implementation)', { 
-      value: output.value,
-      source: output.source 
-    })
-    
-    return output
-  }
-}
+  })
+})

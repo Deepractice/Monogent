@@ -1,8 +1,5 @@
-import { Generation } from '../substrate/Generation.js'
-import { Experience } from '../Experience.js'
-import { getLogger } from '@monogent/logger'
-
-const log = getLogger('episodic-retrieval')
+import { Computation, defineComputation } from '../substrate/Computation.js'
+import { Elaboration } from '../substrate/Elaboration.js'
 
 /**
  * Episodic Retrieval Step Interface
@@ -19,47 +16,53 @@ const log = getLogger('episodic-retrieval')
  *   (Bransford & Johnson, 1972; Alba & Hasher, 1983)
  * 
  * Implementation Note:
- * - Generation substrate: LLM reconstructs coherent narrative
+ * - Computation substrate: prepares memory reconstruction prompts
  * - Binding strength affects confidence expressions
  * - Normal to have fuzzy/incomplete memories
  */
-export interface EpisodicRetrieval extends Generation {
-  // Inherits async evolve from Generation
+export interface EpisodicRetrieval extends Computation {
+  // Inherits evolve from Computation
 }
 
 /**
  * Default episodic retrieval implementation
  */
-export const episodicRetrieval: EpisodicRetrieval = {
+export const episodicRetrieval: EpisodicRetrieval = defineComputation({
   name: 'episodic-retrieval',
-  type: 'process',
   
-  async evolve<TInput = unknown, TOutput = unknown>(
-    input: Experience<TInput>
-  ): Promise<Experience<TOutput>> {
-    log.debug('Retrieving episodic memory', { 
-      value: input.value,
-      source: input.source 
-    })
+  prompt: (previous) => {
+    const context = previous ? 
+      `基于联想绑定的结果（${previous.source}），` : ''
     
-    // TODO: Implement memory reconstruction via LLM
-    const output: Experience<TOutput> = {
-      value: input.value as unknown as TOutput,
-      source: 'episodic-retrieval',
-      context: {
-        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
-        previousSource: input.source,
-        memoryType: 'reconstructive',
-        retrievalStatus: 'pending',
-        timestamp: Date.now()
-      }
+    return `${context}重建情节记忆：
+    1. 从片段中重构完整事件
+    2. 填补记忆空白和缺失部分
+    3. 整合时间、空间和情境信息
+    4. 评估记忆的置信度
+    请构建连贯的情节叙述。`
+  },
+  
+  schema: () => ({
+    type: 'object',
+    properties: {
+      episode: {
+        type: 'object',
+        properties: {
+          narrative: { type: 'string' },
+          timeframe: { type: 'string' },
+          location: { type: 'string' },
+          participants: { type: 'array', items: { type: 'string' } },
+          keyEvents: { type: 'array', items: { type: 'string' } }
+        }
+      },
+      confidence: {
+        type: 'object',
+        properties: {
+          overall: { type: 'number' },
+          details: { type: 'array', items: { type: 'object' } }
+        }
+      },
+      gaps: { type: 'array', items: { type: 'string' } }
     }
-    
-    log.debug('Episodic memory retrieved (pending implementation)', { 
-      value: output.value,
-      source: output.source 
-    })
-    
-    return output
-  }
-}
+  })
+})

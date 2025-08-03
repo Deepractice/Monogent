@@ -1,9 +1,5 @@
-import { Generation } from '../substrate/Generation.js'
-import { Experience } from '../Experience.js'
+import { Computation, defineComputation } from '../substrate/Computation.js'
 import { Elaboration } from '../substrate/Elaboration.js'
-import { getLogger } from '@monogent/logger'
-
-const log = getLogger('pattern-recognition')
 
 /**
  * Pattern Recognition Step Interface
@@ -20,84 +16,52 @@ const log = getLogger('pattern-recognition')
  *   (Vygotsky, 1934; Baddeley, 1992)
  * 
  * Implementation Note:
- * - Generation substrate: Creative pattern synthesis
+ * - Computation substrate: prepares pattern recognition prompts
  * - In real cognition: visual → "a brown dog barking"
- * - In LLM: input already linguistic, this step validates coherence
+ * - In LLM: formulates questions about pattern coherence
  */
-export interface PatternRecognition extends Generation {
-  // Inherits async evolve from Generation
+export interface PatternRecognition extends Computation {
+  // Inherits evolve from Computation
 }
 
 /**
  * Default pattern recognition implementation
  */
-export const patternRecognition: PatternRecognition = {
+export const patternRecognition: PatternRecognition = defineComputation({
   name: 'pattern-recognition',
-  type: 'process',
   
-  async evolve<TInput = unknown, TOutput = unknown>(
-    input: Experience<TInput>
-  ): Promise<Experience<TOutput>> {
-    log.debug('Recognizing patterns', { 
-      value: input.value,
-      source: input.source 
-    })
+  prompt: (previous) => {
+    const context = previous ? 
+      `基于检测到的特征（${previous.source}），` : ''
     
-    // Get previous elaborations from context
-    const previousElaborations = (input.context as any)?.elaborations || []
-    const previousElaboration = previousElaborations[previousElaborations.length - 1]
-    
-    // Create elaboration for pattern recognition
-    const elaboration: Elaboration = {
-      prompt: `基于检测到的特征，识别整体模式：
+    return `${context}识别整体模式：
     1. 组合特征形成完整模式
     2. 识别模式类型和含义
     3. 建立模式间的关联
-    请给出完整的模式理解。`,
-      schema: {
-        type: 'object',
-        properties: {
-          patterns: {
-            type: 'array',
-            items: {
-              type: 'object',
-              properties: {
-                name: { type: 'string' },
-                type: { type: 'string' },
-                description: { type: 'string' },
-                components: {
-                  type: 'array',
-                  items: { type: 'string' }
-                },
-                confidence: { type: 'number' }
-              }
-            }
-          },
-          overallMeaning: { type: 'string' },
-          innerLanguageForm: { type: 'string' }
+    请给出完整的模式理解。`
+  },
+  
+  schema: () => ({
+    type: 'object',
+    properties: {
+      patterns: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            type: { type: 'string' },
+            description: { type: 'string' },
+            components: {
+              type: 'array',
+              items: { type: 'string' }
+            },
+            confidence: { type: 'number' }
+          }
         }
       },
-      source: 'pattern-recognition',
-      previous: previousElaboration
+      overallMeaning: { type: 'string' },
+      innerLanguageForm: { type: 'string' }
     }
-    
-    // For now, just add elaboration - actual LLM call happens at Function level
-    const output: Experience<TOutput> = {
-      value: input.value as unknown as TOutput,
-      source: 'pattern-recognition',
-      context: {
-        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
-        previousSource: input.source,
-        timestamp: Date.now(),
-        elaborations: [...previousElaborations, elaboration]
-      }
-    }
-    
-    log.debug('Pattern recognized as perceptual meaning', { 
-      value: output.value,
-      source: output.source 
-    })
-    
-    return output
-  }
-}
+  })
+})

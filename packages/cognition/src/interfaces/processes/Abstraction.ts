@@ -1,8 +1,5 @@
-import { Generation } from '../substrate/Generation.js'
-import { Experience } from '../Experience.js'
-import { getLogger } from '@monogent/logger'
-
-const log = getLogger('abstraction')
+import { Computation, defineComputation } from '../substrate/Computation.js'
+import { Elaboration } from '../substrate/Elaboration.js'
 
 /**
  * Abstraction Step Interface
@@ -19,47 +16,58 @@ const log = getLogger('abstraction')
  *   (Rumelhart & Ortony, 1977)
  * 
  * Implementation Note:
- * - Generation substrate: LLM identifies abstract patterns
- * - Extracts templates like AGENT-ACTION from specific instances
- * - Enables knowledge transfer and generalization
+ * - Computation substrate: prepares abstraction analysis prompts
+ * - Plans template extraction like AGENT-ACTION from specific instances
+ * - Sets up knowledge transfer and generalization
  */
-export interface Abstraction extends Generation {
-  // Inherits async evolve from Generation
+export interface Abstraction extends Computation {
+  // Inherits evolve from Computation
 }
 
 /**
  * Default abstraction implementation
  */
-export const abstraction: Abstraction = {
+export const abstraction: Abstraction = defineComputation({
   name: 'abstraction',
-  type: 'process',
   
-  async evolve<TInput = unknown, TOutput = unknown>(
-    input: Experience<TInput>
-  ): Promise<Experience<TOutput>> {
-    log.debug('Extracting abstract patterns', { 
-      value: input.value,
-      source: input.source 
-    })
+  prompt: (previous) => {
+    const context = previous ? 
+      `基于分类结果（${previous.source}），` : ''
     
-    // TODO: Implement pattern extraction via LLM
-    const output: Experience<TOutput> = {
-      value: input.value as unknown as TOutput,
-      source: 'abstraction',
-      context: {
-        ...(typeof input.context === 'object' && input.context !== null ? input.context : {}),
-        previousSource: input.source,
-        abstractionStatus: 'pending',
-        cognitiveStage: 'abstraction',
-        timestamp: Date.now()
+    return `${context}进行抽象提取：
+    1. 识别可泛化的结构模式
+    2. 提取不变量和变量部分
+    3. 构建抽象模板和框架
+    4. 建立类比映射关系
+    请从AMR中提取抽象结构。`
+  },
+  
+  schema: () => ({
+    type: 'object',
+    properties: {
+      templates: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            pattern: { type: 'string' },
+            slots: { type: 'array', items: { type: 'string' } },
+            constraints: { type: 'array', items: { type: 'string' } }
+          }
+        }
+      },
+      mappings: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            concrete: { type: 'string' },
+            abstract: { type: 'string' },
+            bindings: { type: 'object' }
+          }
+        }
       }
     }
-    
-    log.debug('Abstract patterns extracted (pending implementation)', { 
-      value: output.value,
-      source: output.source 
-    })
-    
-    return output
-  }
-}
+  })
+})
