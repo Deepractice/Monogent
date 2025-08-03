@@ -6,12 +6,12 @@
  */
 
 // Core interfaces
-export type { Stimulus } from './interfaces/Stimulus.js'
 export type { Cognition } from './interfaces/Cognition.js'
 export { cognition } from './interfaces/Cognition.js'
 
 // Substrate abstractions (the cognitive framework)
 export type { Evolution } from './interfaces/substrate/Evolution.js'
+export type { Stimulus } from './interfaces/substrate/Stimulus.js'
 export { composeProcesses, composeFunctions } from './interfaces/substrate/Evolution.js'
 export type { Experience } from './interfaces/substrate/Experience.js'
 export type { Synthesis } from './interfaces/substrate/Synthesis.js'

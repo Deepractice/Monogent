@@ -1,7 +1,7 @@
 import { Computation, defineComputation } from '../substrate/Computation.js'
 import { Experience } from '../substrate/Experience.js'
 import { Elaboration } from '../substrate/Elaboration.js'
-import { Stimulus } from '../Stimulus.js'
+import { Stimulus } from '../substrate/Stimulus.js'
 
 /**
  * Experiential Encoding Process Interface
