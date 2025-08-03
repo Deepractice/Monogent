@@ -38,16 +38,17 @@ export interface Action extends Computation {
 export const action: Action = defineComputation({
   name: 'action',
   
-  elaborate(previous?: Elaboration): Elaboration {
-    return {
-      prompt: `执行动作决策：
+  prompt: (previous) => {
+    // Action usually comes after a chain of cognitive processing
+    const decisionContext = previous ? 
+      `基于前面的认知处理链（${previous.source}），` : 
+      '根据当前认知状态，'
+    
+    return `${decisionContext}执行动作决策：
     1. 分析需要执行的动作类型
     2. 确定执行参数和目标
     3. 选择适当的工具或API
     4. 评估执行风险和影响
-    请描述如何将认知决策转化为实际行动。`,
-      source: 'action',
-      previous
-    }
+    请描述如何将认知决策转化为实际行动。`
   }
 })

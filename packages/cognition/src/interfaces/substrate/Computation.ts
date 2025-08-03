@@ -1,6 +1,7 @@
 import { Evolution } from './Evolution.js'
 import { Experience } from '../Experience.js'
 import { Elaboration } from './Elaboration.js'
+import { JSONSchema7 } from 'json-schema'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('computation')
@@ -52,13 +53,21 @@ export interface Computation extends Evolution {
  */
 export function defineComputation(options: {
   name: string
-  elaborate: (previous?: Elaboration) => Elaboration
+  prompt: (previous?: Elaboration) => string
+  schema?: (previous?: Elaboration) => JSONSchema7 | undefined
 }): Computation {
   return {
     name: options.name,
     type: 'process',
     
-    elaborate: options.elaborate,
+    elaborate(previous?: Elaboration): Elaboration {
+      return {
+        prompt: options.prompt(previous),
+        schema: options.schema?.(previous),
+        source: options.name,
+        previous
+      }
+    },
     
     evolve(input: Experience): Experience {
       log.debug(`Processing ${options.name}`, { 
@@ -66,8 +75,11 @@ export function defineComputation(options: {
         hasElaboration: !!input.elaboration 
       })
       
-      // Create new elaboration based on previous
-      const elaboration = options.elaborate(input.elaboration)
+      // Create new elaboration with automatic chaining
+      const elaboration = this.elaborate(input.elaboration)
+      
+      // The elaborate function should have set the previous link
+      // If not, that's a bug in the process implementation
       
       // Return updated Experience (no new node created)
       return {

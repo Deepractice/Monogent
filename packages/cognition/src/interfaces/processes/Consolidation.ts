@@ -39,16 +39,15 @@ export interface Consolidation extends Computation {
 export const consolidation: Consolidation = defineComputation({
   name: 'consolidation',
   
-  elaborate(previous?: Elaboration): Elaboration {
-    return {
-      prompt: `记忆巩固处理：
+  prompt: (previous) => {
+    const contextInfo = previous ? 
+      `基于之前的处理结果（${previous.source}），` : ''
+    
+    return `${contextInfo}记忆巩固处理：
     1. 评估体验的重要性和新颖性
     2. 识别与现有记忆的关联
     3. 确定存储策略和强度
     4. 构建记忆索引和连接
-    请描述如何将此体验整合到长期记忆中。`,
-      source: 'consolidation',
-      previous
-    }
+    请描述如何将此体验整合到长期记忆中。`
   }
 })

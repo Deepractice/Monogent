@@ -34,16 +34,20 @@ export const experientialEncoding: ExperientialEncoding = {
   ...defineComputation({
     name: 'experiential-encoding',
     
-    elaborate(previous?: Elaboration): Elaboration {
-      return {
-        prompt: `体验编码：
+    prompt: (previous) => {
+      if (previous) {
+        return `基于之前的处理（${previous.source}），重新编码体验：
+    1. 评估之前编码的有效性
+    2. 识别需要调整的部分
+    3. 优化体验表示
+    请重新构建体验格式。`
+      }
+      
+      return `体验编码：
     1. 识别原始输入类型
     2. 转换为认知系统可处理格式
     3. 标记初始元数据
-    请将外部刺激转化为体验格式。`,
-        source: 'experiential-encoding',
-        previous
-      }
+    请将外部刺激转化为体验格式。`
     }
   }),
   

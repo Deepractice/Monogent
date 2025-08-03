@@ -34,9 +34,17 @@ export interface Sensation extends Computation {
 export const sensation: Sensation = defineComputation({
   name: 'sensation',
   
-  elaborate(previous?: Elaboration): Elaboration {
-    return {
-      prompt: `初始感知处理：
+  prompt: (previous) => {
+    // Sensation is usually the first process, but can have previous in some paths
+    if (previous) {
+      return `基于之前的处理结果，进行新的感知分析：
+    1. 对比之前的感知模式
+    2. 识别变化和新特征
+    3. 评估连续性和差异
+    请分析新的输入特征。`
+    }
+    
+    return `初始感知处理：
     1. 识别输入的基本特征：
        - 数据类型和格式
        - 信息量和复杂度
@@ -49,9 +57,6 @@ export const sensation: Sensation = defineComputation({
        - 层次关系
        - 密度分布
        - 潜在的组织模式
-    请进行初步感知分析，为后续处理提供方向。`,
-      source: 'sensation',
-      previous
-    }
+    请进行初步感知分析，为后续处理提供方向。`
   }
 })
