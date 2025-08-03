@@ -1,5 +1,4 @@
-import { Evolution } from '../substrate/Evolution.js'
-import { compose } from '../substrate/EvolutionComposer.js'
+import { Evolution, composeFunctions } from '../substrate/Evolution.js'
 import { perception } from '../functions/Perception.js'
 import { comprehension } from '../functions/Comprehension.js'
 import { spreadingActivation } from '../processes/SpreadingActivation.js'
@@ -40,16 +39,11 @@ import { consolidation } from '../processes/Consolidation.js'
  * - Consolidation: Integrate new understanding with existing knowledge
  * Output: Deep understanding with connections to prior knowledge
  */
-export const understand: Evolution = {
-  name: 'understand',
-  type: 'path',
-  
-  evolve: compose(
-    perception,
-    comprehension,
-    spreadingActivation,
-    associativeBinding,
-    recollection,
-    consolidation
-  ).evolve
-}
+export const understand: Evolution = composeFunctions(
+  perception,
+  comprehension,
+  spreadingActivation,
+  associativeBinding,
+  recollection,
+  consolidation
+)

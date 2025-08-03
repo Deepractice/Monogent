@@ -56,3 +56,71 @@ export interface Evolution {
    */
   evolve(input: Experience): Experience | Promise<Experience>
 }
+
+/**
+ * Compose processes (micro-evolution)
+ * 
+ * Key behaviors:
+ * - Accumulates Elaborations in the chain
+ * - Preserves the original Experience (no new node)
+ * - Passes accumulated context through the pipeline
+ * 
+ * This models Kant's sensibility - gathering materials for understanding
+ */
+export function composeProcesses(...processes: Evolution[]): Evolution {
+  return {
+    name: `processes(${processes.map(p => p.name).join('→')})`,
+    type: 'process',
+    
+    async evolve(input: Experience): Promise<Experience> {
+      let current = input
+      
+      // Run each process in sequence, accumulating elaborations
+      for (const process of processes) {
+        current = await process.evolve(current)
+      }
+      
+      // Return the final Experience with accumulated elaboration
+      // No new Experience node - preserves the chain
+      return current
+    }
+  }
+}
+
+/**
+ * Compose functions (macro-evolution)
+ * 
+ * Key behaviors:
+ * - Each function creates a new Experience node
+ * - Chains Experiences via previous pointer
+ * - Each represents a cognitive milestone
+ * 
+ * This models Kant's understanding - forming concepts from materials
+ */
+export function composeFunctions(...functions: Evolution[]): Evolution {
+  return {
+    name: `functions(${functions.map(f => f.name).join('→')})`,
+    type: 'path',
+    
+    async evolve(input: Experience): Promise<Experience> {
+      let current: Experience = input
+      
+      // Each function creates a new Experience node
+      for (const func of functions) {
+        const next = await func.evolve(current)
+        
+        // Ensure proper Experience chaining
+        if (!next.previous) {
+          current = {
+            ...next,
+            previous: current
+          }
+        } else {
+          current = next
+        }
+      }
+      
+      return current
+    }
+  }
+}

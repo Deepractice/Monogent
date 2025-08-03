@@ -12,6 +12,7 @@ export { cognition } from './interfaces/Cognition.js'
 
 // Substrate abstractions (the cognitive framework)
 export type { Evolution } from './interfaces/substrate/Evolution.js'
+export { composeProcesses, composeFunctions } from './interfaces/substrate/Evolution.js'
 export type { Experience } from './interfaces/substrate/Experience.js'
 export type { Synthesis } from './interfaces/substrate/Synthesis.js'
 export type { Computation } from './interfaces/substrate/Computation.js'
@@ -20,8 +21,6 @@ export type { Generation } from './interfaces/substrate/Generation.js'
 export { defineGeneration } from './interfaces/substrate/Generation.js'
 export type { Elaboration } from './interfaces/substrate/Elaboration.js'
 export type { Interpretation } from './interfaces/substrate/Interpretation.js'
-export type { EvolutionComposer } from './interfaces/substrate/EvolutionComposer.js'
-export { compose, composeProcesses, composeFunctions, defaultComposer } from './interfaces/substrate/EvolutionComposer.js'
 
 // Composition utilities
 export { compose as composeFunc, composeAsync, pipe, pipeAsync } from './interfaces/Composer.js'
