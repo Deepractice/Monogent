@@ -1,7 +1,7 @@
 import { Generation, defineGeneration } from '../substrate/Generation.js'
-import { semanticEncoding } from '../processes/SemanticEncoding.js'
-import { categorization } from '../processes/Categorization.js'
-import { abstraction } from '../processes/Abstraction.js'
+import { semanticEncoding } from '../sensory/SemanticEncoding.js'
+import { categorization } from '../sensory/Categorization.js'
+import { abstraction } from '../sensory/Abstraction.js'
 
 /**
  * Comprehension Function Interface
