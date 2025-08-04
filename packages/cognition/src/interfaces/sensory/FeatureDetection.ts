@@ -31,14 +31,36 @@ export const featureDetection: FeatureDetection = defineComputation({
   name: 'feature-detection',
   
   prompt: (previous) => {
-    const context = previous ? 
-      `基于之前的处理结果（${previous.source}），` : ''
+    if (!previous) {
+      throw new Error('FeatureDetection requires previous elaboration from SensoryGating')
+    }
     
-    return `${context}对筛选后的内容进行特征检测：
-    1. 提取关键特征和模式
-    2. 识别语义标记和结构
-    3. 分析特征之间的关系
-    请详细描述检测到的特征。`
+    return `Extract perceptually relevant features based on Feature Integration Theory (Treisman & Gelade, 1980):
+
+"Features are registered early, automatically, and in parallel across the visual field" - Treisman
+
+Building on the attention-weighted input from sensory gating:
+
+1. STRUCTURAL FEATURES (Form perception - Marr, 1982):
+   - Identify boundaries and segments
+   - Detect hierarchical structure
+   - Mark beginning, middle, and end patterns
+   - Note repetitions and variations
+   
+2. SEMANTIC FEATURES (Meaning extraction - Tulving, 1972):
+   - Extract key concepts and entities
+   - Identify relationships and dependencies
+   - Detect semantic categories
+   - Mark emotional or evaluative content
+   
+3. FUNCTIONAL FEATURES (Affordances - Gibson, 1979):
+   - What actions does this information afford?
+   - What problems or questions does it present?
+   - What responses might be required?
+   - What decisions are implied?
+
+Output: Structured feature map that preserves information needed for pattern recognition.
+Focus on features that will help form a coherent perceptual whole, not exhaustive analysis.`
   },
   
   schema: () => ({

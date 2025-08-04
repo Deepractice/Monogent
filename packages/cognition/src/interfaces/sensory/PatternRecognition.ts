@@ -31,14 +31,37 @@ export const patternRecognition: PatternRecognition = defineComputation({
   name: 'pattern-recognition',
   
   prompt: (previous) => {
-    const context = previous ? 
-      `基于检测到的特征（${previous.source}），` : ''
+    if (!previous) {
+      throw new Error('PatternRecognition requires previous elaboration from FeatureDetection')
+    }
     
-    return `${context}识别整体模式：
-    1. 组合特征形成完整模式
-    2. 识别模式类型和含义
-    3. 建立模式间的关联
-    请给出完整的模式理解。`
+    return `Integrate features into coherent patterns based on Gestalt Principles (Wertheimer, 1923; Koffka, 1935):
+
+"The whole is greater than the sum of its parts" - Gestalt Psychology
+
+Using the detected features, form perceptual wholes:
+
+1. PATTERN INTEGRATION (Gestalt Laws):
+   - Proximity: Group features that are close together
+   - Similarity: Connect features that share properties
+   - Continuity: Follow smooth, continuous patterns
+   - Closure: Complete incomplete patterns
+   - Figure-Ground: Distinguish main content from background
+   
+2. MEANING EMERGENCE (Recognition-by-Components - Biederman, 1987):
+   - What coherent whole(s) emerge from these features?
+   - What is the primary message or content?
+   - What secondary patterns support or modify the primary?
+   - How do the patterns relate to each other?
+   
+3. PERCEPTUAL SUMMARY (Inner Speech - Vygotsky, 1934):
+   - Formulate a concise "inner language" description
+   - What would you "say to yourself" about this input?
+   - Capture the essence in natural, internal narrative
+   - This becomes the foundation for higher cognition
+
+Output: Integrated perceptual experience ready for conceptual processing.
+The goal is coherent understanding, not detailed analysis.`
   },
   
   schema: () => ({
