@@ -1,10 +1,10 @@
 import { Evolution, composeFunctions } from '../substrate/Evolution.js'
-import { perception } from '../functions/Perception.js'
-import { comprehension } from '../functions/Comprehension.js'
-import { spreadingActivation } from '../processes/SpreadingActivation.js'
-import { associativeBinding } from '../processes/AssociativeBinding.js'
-import { recollection } from '../functions/Recollection.js'
-import { consolidation } from '../processes/Consolidation.js'
+import { perception } from '../perceptual/Perception.js'
+import { comprehension } from '../perceptual/Comprehension.js'
+import { spreadingActivation } from '../sensory/SpreadingActivation.js'
+import { associativeBinding } from '../sensory/AssociativeBinding.js'
+import { recollection } from '../perceptual/Recollection.js'
+import { consolidation } from '../sensory/Consolidation.js'
 
 /**
  * Understand Path - Deep understanding through memory integration

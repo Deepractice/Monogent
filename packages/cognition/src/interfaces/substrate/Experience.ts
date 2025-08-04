@@ -1,7 +1,7 @@
 import { Elaboration } from './Elaboration.js'
 import { Interpretation } from './Interpretation.js'
-import { Synthesis } from './Synthesis.js'
-import { Stimulus } from './Stimulus.js'
+import { Inference } from './Inference.js'
+import { Origin } from './Origin.js'
 
 /**
  * Experience Interface - The Unified Moment of Cognition
@@ -32,11 +32,11 @@ import { Stimulus } from './Stimulus.js'
  */
 export interface Experience {
   /**
-   * The stimulus that triggered this experience
-   * Can be external (user input, tool feedback) or internal (reflection, association)
+   * The origin that triggered this experience
+   * Can be external (stimuli) or internal (memory, thought, emotion, etc.)
    * This is the "given" that sets cognition in motion
    */
-  readonly stimulus?: Stimulus
+  readonly origin?: Origin
   /**
    * The elaborative process that led to this experience
    * Contains the accumulated questions/prompts from all processes
@@ -65,11 +65,11 @@ export interface Experience {
   readonly previous?: Experience
   
   /**
-   * Optional synthesis configuration for LLM interaction
-   * Carries the interpretation strategy through the cognitive chain
+   * Optional inference configuration for LLM interaction
+   * Carries the cortical processing strategy through the cognitive chain
    * Can be inherited from previous experiences if not specified
    */
-  readonly synthesis?: Synthesis
+  readonly inference?: Inference
   
   /**
    * Optional metadata about this experience

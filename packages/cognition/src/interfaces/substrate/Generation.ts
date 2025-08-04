@@ -3,7 +3,7 @@ import { Experience } from './Experience.js'
 import { Elaboration } from './Elaboration.js'
 import { Interpretation } from './Interpretation.js'
 import { Computation } from './Computation.js'
-import { Synthesis } from './Synthesis.js'
+import { Inference } from './Inference.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('generation')
@@ -93,18 +93,18 @@ export function defineGeneration(options: {
       // Create new experience with elaboration
       const newExperience = this.experience(previous)
       
-      // Get synthesis configuration
-      const synthesis = newExperience.synthesis || previous.synthesis
-      if (!synthesis) {
-        throw new Error(`No synthesis configuration found for ${this.name}`)
+      // Get inference configuration
+      const inference = newExperience.inference || previous.inference
+      if (!inference) {
+        throw new Error(`No inference configuration found for ${this.name}`)
       }
       
-      log.debug(`Calling synthesis for ${this.name}`, {
+      log.debug(`Calling inference for ${this.name}`, {
         hasElaboration: !!newExperience.elaboration
       })
       
-      // Call LLM through synthesis
-      const interpretation = await synthesis.interpret(newExperience)
+      // Call LLM through inference
+      const interpretation = await inference.infer(newExperience)
       
       // Return complete Experience
       return {

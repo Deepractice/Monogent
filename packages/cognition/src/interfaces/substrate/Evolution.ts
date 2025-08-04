@@ -39,11 +39,12 @@ export interface Evolution {
   
   /**
    * The type of evolution - determines composition strategy
-   * - 'process': Micro-evolution within a cognitive stage (no new Experience)
-   * - 'function': Macro-evolution producing new cognitive experience
-   * - 'path': Composite of functions
+   * - 'sensory': Micro-evolution within sensory stage (no new Experience)
+   * - 'perceptual': Macro-evolution producing new cognitive experience
+   * - 'path': Composite of perceptual evolutions
+   * - 'apperceptive': Highest evolution unifying origin and perception
    */
-  readonly type?: 'process' | 'function' | 'path'
+  readonly type?: 'sensory' | 'perceptual' | 'path' | 'apperceptive'
   
   /**
    * The fundamental operation: evolve Experience from one form to another
@@ -58,7 +59,7 @@ export interface Evolution {
 }
 
 /**
- * Compose processes (micro-evolution)
+ * Compose sensory processes (micro-evolution)
  * 
  * Key behaviors:
  * - Accumulates Elaborations in the chain
@@ -69,8 +70,8 @@ export interface Evolution {
  */
 export function composeProcesses(...processes: Evolution[]): Evolution {
   return {
-    name: `processes(${processes.map(p => p.name).join('→')})`,
-    type: 'process',
+    name: `sensory(${processes.map(p => p.name).join('→')})`,
+    type: 'sensory',
     
     async evolve(input: Experience): Promise<Experience> {
       let current = input
@@ -88,10 +89,10 @@ export function composeProcesses(...processes: Evolution[]): Evolution {
 }
 
 /**
- * Compose functions (macro-evolution)
+ * Compose perceptual functions (macro-evolution)
  * 
  * Key behaviors:
- * - Each function creates a new Experience node
+ * - Each perception creates a new Experience node
  * - Chains Experiences via previous pointer
  * - Each represents a cognitive milestone
  * 
@@ -99,7 +100,7 @@ export function composeProcesses(...processes: Evolution[]): Evolution {
  */
 export function composeFunctions(...functions: Evolution[]): Evolution {
   return {
-    name: `functions(${functions.map(f => f.name).join('→')})`,
+    name: `perceptual(${functions.map(f => f.name).join('→')})`,
     type: 'path',
     
     async evolve(input: Experience): Promise<Experience> {

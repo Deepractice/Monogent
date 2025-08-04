@@ -1,27 +1,42 @@
 import { Evolution } from './substrate/Evolution.js'
-import { understand } from './paths/understand.js'
+import { Origin } from './substrate/Origin.js'
+import { Experience } from './substrate/Experience.js'
+import { understand } from './apperception/understand.js'
 
 /**
- * Cognition Interface - Gateway to Cognitive Paths
+ * Cognition Interface - The Central Cognitive Orchestrator
  * 
- * A simple entry point for accessing various cognitive paths.
- * Each path represents a specific combination of cognitive functions
- * designed for different types of cognitive tasks.
+ * Cognition coordinates the transformation of Origins into Experiences
+ * through appropriate cognitive functions. It embodies the principle:
+ * Origin + Function = Cognitive Process
  * 
  * Design Philosophy:
- * - Cognition is the orchestrator of paths
- * - Paths are pre-configured function combinations
- * - Each path is optimized for specific cognitive tasks
+ * - Cognition is the gateway between world and mind
+ * - Handles both external stimuli and internal origins
+ * - Dynamically selects appropriate processing paths
  * 
  * Theoretical Foundation:
- * - Multiple Routes to Cognition: Different tasks require different processes
+ * - Kant's Transcendental Unity: "The synthetic unity of apperception"
+ *   (Kant, 1781, CPR, B131-136)
+ * - Multiple Routes to Cognition: Different origins require different processes
  *   (Dual-route models, Coltheart et al., 2001)
- * - Cognitive Flexibility: Adaptive path selection based on task demands
+ * - Cognitive Flexibility: Adaptive function selection based on origin type
  *   (Diamond, 2013; Miyake et al., 2000)
- * - Process vs Product: Focus on the journey, not just the destination
- *   (Marr, 1982, levels of analysis)
+ * 
+ * Core Formula:
+ * Cognition(Origin) → Synthesis → Experience → Function → Experience'
  */
 export interface Cognition {
+  /**
+   * Process an origin through cognitive synthesis
+   * This is the fundamental entry point for all cognition
+   * 
+   * @param origin The origin to process (external or internal)
+   * @param evolution Optional specific evolution to use (defaults to appropriate path)
+   * @returns The resulting experience after cognitive processing
+   */
+  process(origin: Origin, evolution?: Evolution): Promise<Experience>
+  
   /**
    * Get the understand path - Deep understanding through memory integration
    * 
@@ -33,12 +48,11 @@ export interface Cognition {
    */
   understand(): Evolution
   
-  // Future paths can be added here:
-  // reflect(): Evolution     // Simple reflex path
-  // perceive(): Evolution    // Basic perception path
-  // recall(): Evolution      // Memory retrieval path
-  // learn(): Evolution       // New knowledge acquisition path
-  // think(): Evolution       // Internal thinking loop path
+  // Future synthesis methods:
+  // perceive(origin: Origin): Promise<Experience>    // Process through perception
+  // remember(origin: Origin): Promise<Experience>    // Process through memory
+  // reflect(origin: Origin): Promise<Experience>     // Process through reflection
+  // imagine(origin: Origin): Promise<Experience>     // Process through imagination
 }
 
 /**

@@ -1,4 +1,5 @@
 import { Generation, defineGeneration } from '../substrate/Generation.js'
+import { experientialEncoding } from '../processes/ExperientialEncoding.js'
 import { sensation } from '../processes/Sensation.js'
 import { sensoryGating } from '../processes/SensoryGating.js'
 import { featureDetection } from '../processes/FeatureDetection.js'
@@ -19,10 +20,11 @@ import { patternRecognition } from '../processes/PatternRecognition.js'
  *   (Rao & Ballard, 1999; Clark, 2013; Hohwy, 2013)
  * 
  * Composes:
- * 1. Sensation: Receive external stimuli
- * 2. SensoryGating: Filter relevant sensory information  
- * 3. FeatureDetection: Extract basic features (with LLM interpretation)
- * 4. PatternRecognition: Form perceptual wholes
+ * 1. ExperientialEncoding: Convert stimuli into Experience format
+ * 2. Sensation: Receive and transduce sensory signals
+ * 3. SensoryGating: Filter relevant sensory information  
+ * 4. FeatureDetection: Extract basic features (with LLM interpretation)
+ * 5. PatternRecognition: Form perceptual wholes
  */
 export interface Perception extends Generation {
   // Inherits async evolve from Generation
@@ -32,7 +34,8 @@ export interface Perception extends Generation {
 /**
  * Default perception implementation using defineGeneration
  * 
- * Runs four processes to build up perceptual understanding:
+ * Runs five processes to build up perceptual understanding:
+ * - ExperientialEncoding: Entry point into cognition
  * - Sensation: Initial contact with stimuli
  * - SensoryGating: Attention filtering
  * - FeatureDetection: Extract meaningful features
@@ -41,6 +44,7 @@ export interface Perception extends Generation {
 export const perception: Perception = defineGeneration({
   name: 'perception',
   processes: [
+    experientialEncoding,
     sensation,
     sensoryGating,
     featureDetection,
