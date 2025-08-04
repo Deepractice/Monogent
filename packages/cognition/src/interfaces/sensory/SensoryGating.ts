@@ -16,9 +16,10 @@ import { Elaboration } from '../substrate/Elaboration.js'
  *   (Crick, 1984; McAlonan et al., 2008)
  * 
  * Implementation Note:
- * - Computation substrate: automatic, pre-conscious filtering
- * - In LLM context, currently pass-through
- * - Future: could filter based on relevance/salience
+ * - In biological systems: physical filtering via thalamic circuits
+ * - In LLM context: attention guidance through prompt engineering
+ * - Provides theoretical framework for AI to prioritize information
+ * - Cannot physically filter, but can guide selective attention
  */
 export interface SensoryGating extends Computation {
   // Inherits evolve from Computation
@@ -32,13 +33,33 @@ export const sensoryGating: SensoryGating = defineComputation({
   name: 'sensory-gating',
   
   prompt: (previous) => {
-    // Can use previous elaboration to build context-aware prompt
-    const context = previous ? `基于之前的感知分析，` : ''
+    // Build on sensation's feature detection
+    if (!previous) {
+      throw new Error('SensoryGating requires previous elaboration from Sensation')
+    }
     
-    return `${context}进行注意力过滤：
-    1. 根据显葷性信号确定关注重点
-    2. 过滤冗余或无关信息
-    3. 标记需要深入处理的部分
-    请筛选出值得进一步分析的内容。`
+    return `Apply attentional filtering based on Attention Theory (Broadbent, 1958; Kahneman, 1973):
+
+"Attention is the taking possession by the mind of one out of several possible objects" - William James (1890)
+
+Given the sensory features detected, apply selective attention following:
+
+1. SALIENCE FILTERING (Bottom-up attention - Itti & Koch, 2001):
+   - Identify features with high contrast or uniqueness
+   - Detect sudden changes or unexpected patterns
+   - Mark elements that "pop out" from the background
+   
+2. RELEVANCE GATING (Top-down attention - Desimone & Duncan, 1995):
+   - Assess task-relevance of detected features
+   - Prioritize goal-related information
+   - Suppress task-irrelevant distractors
+   
+3. CAPACITY ALLOCATION (Limited Resource Theory - Kahneman, 1973):
+   - Assign attention weights based on importance
+   - Note which features require deep processing
+   - Flag resource-intensive elements for later stages
+
+Output: Attention-weighted features with priority markers for subsequent processing.
+Note: This is attention guidance, not physical filtering - all information remains available.`
   }
 })
