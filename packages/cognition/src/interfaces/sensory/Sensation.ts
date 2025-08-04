@@ -33,37 +33,35 @@ export interface Sensation extends Computation, Transduction {
 
 /**
  * Default sensation implementation
- * First process in cognitive chain - receives external stimuli
+ * Always the first process in cognitive chain - no previous elaboration
+ * Receives raw antecedents and begins the cognitive journey
  */
 export const sensation: Sensation = {
   ...defineComputation({
     name: 'sensation',
     
-    prompt: (previous) => {
-    // Sensation is usually the first process, but can have previous in some paths
-    if (previous) {
-      return `基于之前的处理结果，进行新的感知分析：
-    1. 对比之前的感知模式
-    2. 识别变化和新特征
-    3. 评估连续性和差异
-    请分析新的输入特征。`
-    }
-    
-    return `初始感知处理：
-    1. 识别输入的基本特征：
-       - 数据类型和格式
-       - 信息量和复杂度
-       - 时序/空间分布特征
-    2. 检测显著性信号：
-       - 重复模式
-       - 异常或突变
-       - 关键标记或边界
-    3. 评估信息结构：
-       - 层次关系
-       - 密度分布
-       - 潜在的组织模式
-    请进行初步感知分析，为后续处理提供方向。`
-    }
+    prompt: () => `Perform initial sensory processing based on Bottom-up Processing theory (Gibson, 1966):
+
+"The detection of information is the foundation of perception" - Gibson's Direct Perception Theory
+
+Following Broadbent's Filter Model (1958) and Treisman's Attenuation Theory (1964):
+
+1. Detect basic features of the input:
+   - Data type and format (physical properties)
+   - Information density and complexity
+   - Temporal/spatial distribution patterns
+   
+2. Identify salient signals (Feature Detection Theory - Hubel & Wiesel, 1959):
+   - Repetitive patterns or regularities
+   - Anomalies or sudden changes
+   - Key markers or boundaries
+   
+3. Assess information structure (Gestalt Principles - Wertheimer, 1923):
+   - Hierarchical relationships (figure-ground)
+   - Density distribution (proximity)
+   - Potential organizational patterns (similarity, continuity)
+
+Output: Initial sensory analysis that preserves raw features for subsequent perceptual processing.`
   }),
   
   // Implement transduce method
