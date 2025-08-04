@@ -4,7 +4,7 @@ import { Experience } from './Experience.js'
  * Thought Type - The Product of Apperception
  * 
  * Represents self-aware cognitive content that includes "I think".
- * Can become Origin for new cognitive cycles.
+ * Can become Antecedent for new cognitive cycles.
  * 
  * Theoretical Foundation:
  * - Kant: "The I think must be able to accompany all my representations"
@@ -15,7 +15,7 @@ import { Experience } from './Experience.js'
  * Design Philosophy:
  * - Keep it minimal - just what's needed for recursion
  * - Thought contains Experience (the cognitive content)
- * - Can become Origin for reflection/introspection
+ * - Can become Antecedent for reflection/introspection
  */
 export interface Thought {
   /**

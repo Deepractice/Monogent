@@ -1,6 +1,7 @@
 import { Computation, defineComputation } from '../substrate/Computation.js'
 import { Experience } from '../substrate/Experience.js'
-import { Elaboration } from '../substrate/Elaboration.js'
+import { Transduction } from '../substrate/Transduction.js'
+import { Antecedent } from '../substrate/Antecedent.js'
 
 /**
  * Sensation Process Interface
@@ -22,19 +23,23 @@ import { Elaboration } from '../substrate/Elaboration.js'
  * - Pure Computation: deterministic, no interpretation
  * - In multimodal systems, would handle vision/audio/etc.
  */
-export interface Sensation extends Computation {
+export interface Sensation extends Computation, Transduction {
   // Inherits evolve from Computation (sync transformation)
-  // But with special signature: Stimulus → Experience
+  // Inherits transduce from Transduction (Antecedent → Experience)
+  // This dual inheritance reflects sensation's dual role:
+  // 1. As the entry point of cognition (transduce)
+  // 2. As part of cognitive chains (evolve)
 }
 
 /**
  * Default sensation implementation
  * First process in cognitive chain - receives external stimuli
  */
-export const sensation: Sensation = defineComputation({
-  name: 'sensation',
-  
-  prompt: (previous) => {
+export const sensation: Sensation = {
+  ...defineComputation({
+    name: 'sensation',
+    
+    prompt: (previous) => {
     // Sensation is usually the first process, but can have previous in some paths
     if (previous) {
       return `基于之前的处理结果，进行新的感知分析：
@@ -58,5 +63,17 @@ export const sensation: Sensation = defineComputation({
        - 密度分布
        - 潜在的组织模式
     请进行初步感知分析，为后续处理提供方向。`
+    }
+  }),
+  
+  // Implement transduce method
+  transduce(antecedent: Antecedent): Experience {
+    // Create the initial Experience from Antecedent
+    return {
+      source: 'sensation',
+      antecedent: antecedent,
+      // No elaboration yet - that will be added by evolve
+      // No previous - this is the first Experience
+    }
   }
-})
+}

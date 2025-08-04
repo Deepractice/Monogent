@@ -1,7 +1,7 @@
 import { comprehension } from '../src/interfaces/perceptual/Comprehension.js'
 import { echoInference } from '../src/interfaces/substrate/Inference.js'
 import { Experience } from '../src/interfaces/substrate/Experience.js'
-import { Origin } from '../src/interfaces/substrate/Origin.js'
+import { Antecedent } from '../src/interfaces/substrate/Antecedent.js'
 
 /**
  * Test comprehension end-to-end flow
@@ -9,17 +9,17 @@ import { Origin } from '../src/interfaces/substrate/Origin.js'
 async function testComprehension() {
   console.log('=== Testing Comprehension Flow ===\n')
   
-  // Step 1: Create an origin (external stimulus)
-  const origin: Origin = {
+  // Step 1: Create an antecedent (external stimulus)
+  const antecedent: Antecedent = {
     type: 'text',
     content: 'The mitochondria is the powerhouse of the cell'
   }
   
-  // Step 2: Create initial Experience from origin
+  // Step 2: Create initial Experience from antecedent
   // Comprehension expects the input to already have some interpretation from perception
   const initialExperience: Experience = {
     source: 'test',
-    origin: origin,
+    antecedent: antecedent,
     interpretation: {
       content: 'Basic cellular biology concept about mitochondria',
       source: 'mock-perception',

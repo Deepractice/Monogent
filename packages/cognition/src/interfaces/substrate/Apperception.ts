@@ -1,6 +1,6 @@
 import { Evolution } from './Evolution.js'
 import { Experience } from './Experience.js'
-import { Origin } from './Origin.js'
+import { Antecedent } from './Antecedent.js'
 import { getLogger } from '@monogent/logger'
 
 const log = getLogger('apperception')
@@ -8,7 +8,7 @@ const log = getLogger('apperception')
 /**
  * Apperception Interface - The Unity of Consciousness
  * 
- * Represents the highest cognitive act of unifying sensible intuition (Origin)
+ * Represents the highest cognitive act of unifying sensible intuition (Antecedent)
  * with intellectual understanding (Function) under the unity of consciousness.
  * 
  * Theoretical Foundation:
@@ -38,18 +38,18 @@ const log = getLogger('apperception')
  */
 export interface Apperception extends Evolution {
   /**
-   * Apperceive an origin into experience
+   * Apperceive an antecedent into experience
    * The act of conscious integration under the unity of self-consciousness
    * 
-   * @param origin The intuitive material to be apperceived
+   * @param antecedent The intuitive material to be apperceived
    * @returns An experience unified under transcendental apperception
    */
-  apperceive(origin: Origin): Experience
+  apperceive(antecedent: Antecedent): Experience
 }
 
 /**
  * Factory function to define an Apperception
- * Creates a complete apperception that unifies origin and function
+ * Creates a complete apperception that unifies antecedent and function
  * 
  * @param options The apperception definition
  * @returns A complete Apperception implementation
@@ -57,20 +57,20 @@ export interface Apperception extends Evolution {
 export function defineApperception(options: {
   name: string
   function: Evolution
-  encoding?: (origin: Origin) => Experience
+  encoding?: (antecedent: Antecedent) => Experience
 }): Apperception {
   return {
     name: options.name,
     type: 'apperceptive',
     
-    apperceive(origin: Origin): Experience {
-      log.debug(`Apperceiving origin in ${options.name}`, {
-        originType: typeof origin
+    apperceive(antecedent: Antecedent): Experience {
+      log.debug(`Apperceiving antecedent in ${options.name}`, {
+        antecedentType: typeof antecedent
       })
       
       // Use custom encoding or default
       const encode = options.encoding || defaultEncoding
-      return encode(origin)
+      return encode(antecedent)
     },
     
     async evolve(input: Experience): Promise<Experience> {
@@ -82,11 +82,11 @@ export function defineApperception(options: {
 
 /**
  * Default encoding strategy
- * Creates a minimal experience from any origin
+ * Creates a minimal experience from any antecedent
  */
-function defaultEncoding(origin: Origin): Experience {
+function defaultEncoding(antecedent: Antecedent): Experience {
   return {
-    origin,
+    antecedent,
     source: 'apperception',
     metadata: {
       timestamp: Date.now(),

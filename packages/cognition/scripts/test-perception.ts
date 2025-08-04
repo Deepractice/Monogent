@@ -1,7 +1,7 @@
 import { perception } from '../src/interfaces/perceptual/Perception.js'
 import { echoInference } from '../src/interfaces/substrate/Inference.js'
 import { Experience } from '../src/interfaces/substrate/Experience.js'
-import { Origin } from '../src/interfaces/substrate/Origin.js'
+import { Antecedent } from '../src/interfaces/substrate/Antecedent.js'
 
 /**
  * Test perception end-to-end flow
@@ -9,16 +9,16 @@ import { Origin } from '../src/interfaces/substrate/Origin.js'
 async function testPerception() {
   console.log('=== Testing Perception Flow ===\n')
   
-  // Step 1: Create an origin (external stimulus)
-  const origin: Origin = {
+  // Step 1: Create an antecedent (external stimulus)
+  const antecedent: Antecedent = {
     type: 'text',
     content: 'The sky is blue because of Rayleigh scattering'
   }
   
-  // Step 2: Create initial Experience from origin
+  // Step 2: Create initial Experience from antecedent
   const initialExperience: Experience = {
     source: 'test',
-    origin: origin,
+    antecedent: antecedent,
     inference: echoInference
   }
   

@@ -1,7 +1,7 @@
 import { Elaboration } from './Elaboration.js'
 import { Interpretation } from './Interpretation.js'
 import { Inference } from './Inference.js'
-import { Origin } from './Origin.js'
+import { Antecedent } from './Antecedent.js'
 
 /**
  * Experience Interface - The Unified Moment of Cognition
@@ -32,11 +32,11 @@ import { Origin } from './Origin.js'
  */
 export interface Experience {
   /**
-   * The origin that triggered this experience
+   * The antecedent that triggered this experience
    * Can be external (stimuli) or internal (memory, thought, emotion, etc.)
    * This is the "given" that sets cognition in motion
    */
-  readonly origin?: Origin
+  readonly antecedent?: Antecedent
   /**
    * The elaborative process that led to this experience
    * Contains the accumulated questions/prompts from all processes
